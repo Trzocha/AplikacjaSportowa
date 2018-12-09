@@ -2,21 +2,29 @@ import React from "react";
 import P5Wrapper from "react-p5-wrapper";
 // import sketch from "../src/sketch";
 
+//clock max break 179sek
 function sketch(p) {
-  let colors = [];
   let counter = 0;
   let second = 0;
   let minute = 0;
+  let textPosition = 0;
+  let textColor = 0;
+  let flagCounter = true;
+
   setInterval(function() {
     if (second == 1) {
       second = 61;
       minute = minute - 1;
       if (minute == -1) {
+        flagCounter = false;
+        counter = 0;
         console.log("KONIEC");
       }
     }
-    second = second - 1;
-    counter = counter - 1;
+    if (flagCounter) {
+      second = second - 1;
+      counter = counter - 1;
+    }
   }, 1000);
   p.myCustomRedrawAccordingToNewPropsHandler = function(props) {
     counter = second = props.val;
@@ -24,10 +32,10 @@ function sketch(p) {
       minute = Math.floor(second / 60);
       second = second % 60;
     }
+    console.log("m:" + minute + " s:" + second);
   };
   p.setup = function() {
     p.createCanvas(400, 400);
-    // p.angleMode();
   };
 
   p.draw = function() {
@@ -36,35 +44,62 @@ function sketch(p) {
     p.translate(200, 200);
     p.rotate(-3.14 / 2);
 
-    if (minute == 1) {
-      clock2();
+    if (minute == 2) {
       clock1();
-    } else if (minute == 0) {
       clock2();
+      clock3();
+    } else if (minute == 1) {
+      clock1();
+      clock2();
+    } else if (minute == 0) {
+      clock1();
     }
-    p.strokeWeight(1);
+    if (counter >= 100) {
+      textPosition = -15;
+    } else if (counter >= 10) {
+      textPosition = -10;
+    } else {
+      textPosition = -5;
+    }
+
+    if (counter <= 60) {
+      textColor = 255;
+    }
+    p.fill(textColor);
     p.rotate(3.14 / 2);
-    p.text("" + counter, 0, 0);
+    p.textSize(20);
+    p.text("" + counter, textPosition, 0);
   };
+
   let clock1 = function() {
-    let turn = 0;
-    if (minute == 1) {
-      turn = 0.1047 * second;
-    }
-    console.log("0: " + turn + " minute: " + minute);
-    // p.strokeWeight(minute + 1);
-    p.fill(150, 20, 50);
-    p.arc(0, 0, 200, 200, 0, turn, p.PIE);
-  };
-  let clock2 = function() {
+    //najwiekszy zegar
     let turn = 6.28;
     if (minute == 0) {
       turn = 0.1047 * second;
     }
-    console.log("1: " + turn + " minute: " + minute);
-    // p.strokeWeight(minute + 2);
-    p.fill(200, 100, 60);
+    // console.log("0: " + turn + " minute: " + minute);
+    p.fill(214, 69, 65);
     p.arc(0, 0, 300, 300, 0, turn, p.PIE);
+  };
+
+  let clock2 = function() {
+    let turn = 6.28;
+    if (minute == 1) {
+      turn = 0.1047 * second;
+    }
+    //console.log("1: " + turn + " minute: " + minute);
+    p.fill(77, 175, 124);
+    p.arc(0, 0, 290, 290, 0, turn, p.PIE);
+  };
+  let clock3 = function() {
+    //najmniejszy zegar
+    let turn = 6.28; //2PI
+    if (minute == 2) {
+      turn = 0.1047 * second;
+    }
+    //console.log("2: " + turn + " minute: " + minute);
+    p.fill(92, 151, 191);
+    p.arc(0, 0, 280, 280, 0, turn, p.PIE);
   };
 }
 
