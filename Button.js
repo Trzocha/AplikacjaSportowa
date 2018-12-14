@@ -14,7 +14,7 @@ class Button extends Component {
     return (
       <div>
         <input type="button" value="Click me" onClick={this.onButtonClick} />
-        {this.state.visible && <Clock value="60" />}
+        {this.state.visible && <Clock value="20" />}
       </div>
     );
   }
