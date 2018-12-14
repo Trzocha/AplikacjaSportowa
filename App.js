@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import Button from "../src/Button.js";
 // import WorkItem from "../src/WorkItem";
-import ListWorkOut from "../src/ListWorkOut";
+import ListWorkOut from "./ListWorkOut/ListWorkOut";
 import IdForm from "../src/IdFrom";
 import "./App.css";
 
@@ -17,14 +17,20 @@ class App extends Component {
     };
   }
   handleAddWorkOut = value => {
-    // console.log(value);
     const item = this.state.list[this.state.id - 1].task;
     item.push(value); //jakiem chu**m state.list[].task zmienił się bez uzycia setState??
-    // this.setState({
-    //   task: item
-    // });
+    this.setState({
+      task: item
+    });
   };
-  handleAddNewList = () => {};
+  handleAddNewList = () => {
+    const tmp_list = this.state.list;
+    tmp_list.push({ task: [] });
+    this.setState({
+      list: tmp_list
+    });
+    // this.handlechangeId(this.state.list.length);
+  };
   handlePositionWorkOut = () => {};
   handlechangeId = number => {
     this.setState({

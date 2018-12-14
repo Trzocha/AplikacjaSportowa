@@ -4,28 +4,35 @@ class IdForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      idArray: []
+      idArray: [],
+      lenght: this.props.lenghtList
     };
-    for (let i = 0; i < this.props.lenghtList; i++) {
-      //dokumentacja nie pozwala uzywac w construktorze setState, ale jezel to
-      //przeniose do componentDidMout to mam blad "this.state.idArray.map is not a function"
-      this.setState({
-        idArray: this.state.idArray.push(i + 1)
-      });
-    }
   }
-  //   componentDidMount = () => {
-  //     for (let i = 0; i < this.props.lenghtList; i++) {
-  //       this.setState({
-  //         idArray: this.state.idArray.push(i + 1)
-  //       });
-  //     }
-  //   };
+  componentDidMount = () => {
+    this.supplyIdArray();
+  };
+  componentDidUpdate = () => {
+    if (this.props.lenghtList !== this.state.lenght) {
+      this.setState({
+        lenght: this.props.lenghtList
+      });
+      this.supplyIdArray();
+    }
+  };
+  supplyIdArray = () => {
+    const newArr = [];
+    for (let i = 0; i < this.props.lenghtList; i++) {
+      newArr.push(i + 1);
+    }
+    this.setState({
+      idArray: newArr
+    });
+  };
   handleChangeId = e => {
-    console.log(e.target.value);
     this.props.changeId(e.target.value);
   };
   render() {
+    console.log("IdForm");
     return (
       <select onChange={this.handleChangeId}>
         {this.state.idArray.map(list => (
