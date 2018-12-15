@@ -8,9 +8,9 @@ class ListFBW extends Component {
   render() {
     return (
       <>
-        <IdForm
+        <IdForm //OK
           changeId={this.props.changeId}
-          lenghtList={this.props.lengthList}
+          lenghtList={this.props.lenghtList}
         />
         <Panel data={this.props.data} />
         <AddWorkOut add={this.props.addWorkOut} />

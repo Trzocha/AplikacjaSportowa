@@ -58,8 +58,8 @@ class App extends Component {
         <TypeList ChangeTypeList={this.handleChangeTypeList} />
         {this.state.type ? (
           <ListFBW
-            changeId={this.handlechangeId} //nie wyzswietla liczy list
-            lenghtList={this.state.list.length} //nie wyswitla liczby list
+            changeId={this.handlechangeId}
+            lenghtList={this.state.list.length}
             addWorkOut={this.handleAddWorkOut} //dodanie cwiczenia do wybranej listy
             addNewList={this.handleAddNewList} //dodanie nowej listy
             positionWorkOut={this.handlePositionWorkOut} //mozliwosc zamiany miejscami cwiczen
@@ -67,7 +67,11 @@ class App extends Component {
             idList={this.state.id} //id listy
           />
         ) : (
-          <ListWeight />
+          <ListWeight
+            changeId={this.handlechangeId}
+            lenghtList={this.state.list.length}
+            addNewList={this.handleAddNewList}
+          />
         )}
       </div>
     );
