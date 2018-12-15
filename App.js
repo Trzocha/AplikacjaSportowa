@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 // import Button from "../src/Button.js";
 // import WorkItem from "../src/WorkItem";
-import ListWorkOut from "./ListWorkOut/ListWorkOut";
-import IdForm from "../src/IdFrom";
+import ListFBW from "./ListWorkOut/ListFBW";
+import ListWeight from "../src/ListWeight/ListWeight";
+import TypeList from "../src/TypeList";
 import "./App.css";
 
 class App extends Component {
@@ -13,7 +14,8 @@ class App extends Component {
         { task: ["pompki", "podciaganie pod chwytem"] },
         { task: ["hantle", "podciaganie nad chwytem"] }
       ],
-      id: 1
+      id: 1,
+      type: true
     };
   }
   handleAddWorkOut = value => {
@@ -29,7 +31,7 @@ class App extends Component {
     this.setState({
       list: tmp_list
     });
-    // this.handlechangeId(this.state.list.length);
+    this.handlechangeId(this.state.list.length);
   };
   handlePositionWorkOut = () => {};
   handlechangeId = number => {
@@ -37,20 +39,36 @@ class App extends Component {
       id: number
     });
   };
+  handleChangeTypeList = e => {
+    //OK
+    console.log(e.target.value);
+    if (e.target.value === "FBW") {
+      this.setState({
+        type: true
+      });
+    } else if (e.target.value === "WEIGHT") {
+      this.setState({
+        type: false
+      });
+    }
+  };
   render() {
     return (
       <div className="App">
-        <IdForm
-          changeId={this.handlechangeId}
-          lenghtList={this.state.list.length}
-        />
-        <ListWorkOut
-          addWorkOut={this.handleAddWorkOut} //dodanie cwiczenia do wybranej listy
-          addNewList={this.handleAddNewList} //dodanie nowej listy
-          positionWorkOut={this.handlePositionWorkOut} //mozliwosc zamiany miejscami cwiczen
-          data={this.state.list[this.state.id - 1].task} //wysylana lista
-          idList={this.state.id} //id listy
-        />
+        <TypeList ChangeTypeList={this.handleChangeTypeList} />
+        {this.state.type ? (
+          <ListFBW
+            changeId={this.handlechangeId} //nie wyzswietla liczy list
+            lenghtList={this.state.list.length} //nie wyswitla liczby list
+            addWorkOut={this.handleAddWorkOut} //dodanie cwiczenia do wybranej listy
+            addNewList={this.handleAddNewList} //dodanie nowej listy
+            positionWorkOut={this.handlePositionWorkOut} //mozliwosc zamiany miejscami cwiczen
+            data={this.state.list[this.state.id - 1].task} //wysylana lista
+            idList={this.state.id} //id listy
+          />
+        ) : (
+          <ListWeight />
+        )}
       </div>
     );
   }

@@ -1,0 +1,32 @@
+data: {
+        typeList: {
+          FBW: [
+            { task: ["pompki", "podciaganie pod chwytem"] },
+            { task: ["hantle", "podciaganie nad chwytem"] }
+          ],
+          WEIGHT: [
+            {
+              task: [
+                {
+                  name: "pompki",
+                  options: {
+                    description: "Polożyć na ziemie",
+                    amount_series: 4
+                  }
+                }
+              ]
+            },
+            {
+              task: [
+                {
+                  name: "biceps",
+                  options: {
+                    description: "podnosic hantle do gory",
+                    amount_series: 4
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
