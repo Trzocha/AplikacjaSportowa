@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 class AddWorkOut extends Component {
   state = {
-    value: ""
+    value: "",
+    data: this.props.data //nie powinno sie tak robic, ale to tylko dla odczytu
   };
   handleChange = e => {
     // console.log(e.target.value);
@@ -12,7 +13,8 @@ class AddWorkOut extends Component {
   };
   handleClick = () => {
     const value = this.state.value;
-    this.props.add(value);
+    const name = this.state.data;
+    this.props.add(value, name); //wysalanie danych do App
     this.setState({
       value: ""
     });

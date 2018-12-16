@@ -1,32 +1,26 @@
-data: {
-        typeList: {
-          FBW: [
-            { task: ["pompki", "podciaganie pod chwytem"] },
-            { task: ["hantle", "podciaganie nad chwytem"] }
-          ],
-          WEIGHT: [
-            {
-              task: [
-                {
-                  name: "pompki",
-                  options: {
-                    description: "Polożyć na ziemie",
-                    amount_series: 4
-                  }
-                }
-              ]
-            },
-            {
-              task: [
-                {
-                  name: "biceps",
-                  options: {
-                    description: "podnosic hantle do gory",
-                    amount_series: 4
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      },
+data = {
+  "FBW":[
+    {
+      "1":[{
+        "ilosc_cwiczen":2,
+        "opcje_dla_listy":{
+          "ilosc_przerwy_w_seii": 120,
+          "ilosc_przerwy_miedzy_cw: 30,
+          "ilość_serii":3
+        },
+        "cwiczenia":[{
+          "1":{
+            "name": "pompki",
+            "opis": "poloż sie na ziemi",
+            "ilosc_dodadkowego_obc": 5,
+            "ilosc_potwurzen": 15
+          }
+        }]
+
+        
+      }],
+      "ilość_list":2
+    }
+  ]
+
+}
