@@ -3,20 +3,19 @@ import OptionList from "./OptionWorkOut";
 
 class OptionPanel extends Component {
   state = {
-    // visible: false,
-    // valueButton: "Pokaż",
+    buttonPrev: false,
+    buttonNext: true,
     activeID: 0,
+    serieMax: this.props.data["opcje_listy"]["ilosc_ser"],
     serieNumber: 1,
-    WorkOut: []
+    WorkOut: [],
+    counterWorkOut: this.props.data["opcje_listy"]["ilosc_cwiczen"] //tylko dla celów porównawczych componentDidUpdate
   };
-  componentDidMount = () => {
-    // console.log("did");
+  starter = () => {
+    //montowanie nowej tablicy wyzbieranej z danch by map() cwiczenia
     const amountWorkOut = this.props.data["opcje_listy"]["ilosc_cwiczen"];
     let tmp_arr = [];
-    // let obj_template = { name: "", number: "" };
 
-    // console.log(tmp_arr[0].name);
-    // debugger;
     for (let i = 1; i <= amountWorkOut; i++) {
       //dziala, ale czy da sie inaczej? Dlaczego gdy robie push obj_template do tmp_arry w kazdej iteracji pracuje na tym sanym tmp_object
       let obj_template = {
@@ -33,6 +32,19 @@ class OptionPanel extends Component {
     this.setState({
       WorkOut: tmp_arr
     });
+  };
+  componentDidMount = () => {
+    // console.log("did");
+    this.starter();
+  };
+  componentDidUpdate = () => {
+    const actualCOUNTER = this.props.data["opcje_listy"]["ilosc_cwiczen"];
+    if (this.state.counterWorkOut !== actualCOUNTER) {
+      this.starter();
+      this.setState({
+        counterWorkOut: actualCOUNTER
+      });
+    }
   };
   handleClik = e => {
     //obsluga pojawiania i chowania sie opcji dla cwiczenia
@@ -60,11 +72,32 @@ class OptionPanel extends Component {
       });
     }
   };
+  checkSeries = e => {
+    console.log("check");
+    let new_serieNumber;
+    if (e.target.name === "Poprzedni") {
+      new_serieNumber = this.state.serieNumber - 1;
+      if (new_serieNumber > 1) {
+        this.setState({
+          serieNumber: new_serieNumber
+        });
+      } else {
+        this.setState(prevState => ({
+          buttonPrev: !this.prevState.buttonPrev
+        }));
+      }
+    } else if (e.target.name === "Nastepny") {
+    }
+  };
   render() {
     const it = this.state;
     return (
       <>
-        <p>Seria {it.serieNumber}</p>
+        {it.buttonPrev ? (
+          <input type="button" value="Poprzedni" onClick={this.checkSeries} />
+        ) : null}
+        <span>Seria {it.serieNumber}</span>
+        {it.buttonNext ? <input type="button" value="Nastepny" /> : null}
         {it.WorkOut.map(key => (
           <>
             <li>{key.name}</li>
@@ -84,23 +117,6 @@ class OptionPanel extends Component {
             <br />
           </>
         ))}
-        {/* <li>POMPKI</li>
-        {this.state.idWorkOut[0].visible ? <OptionList /> : null}
-        <input
-          type="button"
-          onClick={this.handleClik}
-          value={this.state.idWorkOut[0].valueButton}
-          name="1"
-        />
-        <br />
-        <li>PODCIAGANIE</li>
-        {this.state.idWorkOut[1].visible ? <OptionList /> : null}
-        <input
-          type="button"
-          onClick={this.handleClik}
-          value={this.state.idWorkOut[1].valueButton}
-          name="2"
-        /> */}
       </>
     );
   }

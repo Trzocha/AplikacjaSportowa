@@ -43,8 +43,8 @@ class IdForm extends Component {
   render() {
     return (
       <select onChange={this.handleChangeId} value={this.state.value}>
-        {this.state.idArray.map(list => (
-          <option>{list}</option>
+        {this.state.idArray.map(number => (
+          <option>{number}</option>
         ))}
       </select>
     );

@@ -103,19 +103,31 @@ class App extends Component {
   handleAddWorkOut = (value, name) => {
     //nowe cwiczenie musi pojawic sie w kazdej serii + zwiekszyc o jeden ilosc cwiczen, w aktualnej liscie
     //potrzebne informacje: jaki rodzaj listy, ktora lista[OK], nazwa cwiczenia
-    // const item = this.state.list[this.state.id - 1].task;
-    // item.push(value); //jakiem chu**m state.list[].task zmienił się bez uzycia setState??
-    // this.setState({
-    //   task: item
-    // });
+
+    //WARRING moze generowac błedy ponieważ niby dane przypisałem do zmiennych a i tak pracuje na orginalnym obiekcie
+    //brak uzycia setState!!!!
     console.log(value + " , " + name);
     const idActualList = this.state.id;
     const actualList = this.state.data[name]["lista_" + idActualList];
     const counterSeries = actualList["opcje_listy"]["ilosc_ser"];
-    const counterWorkOut = actualList["opcje_listy"]["ilosc_cwiczen"];
-    const templateObject = "";
-    console.log(actualList);
-    for (let i = 0; i < counterSeries; i++) {}
+    let counterWorkOut = actualList["opcje_listy"]["ilosc_cwiczen"] + 1;
+    const templateObject = {
+      name: value,
+      opis: "",
+      ilosc_dod_obc: "",
+      ilosc_powt_w_cw: ""
+    };
+
+    actualList["opcje_listy"]["ilosc_cwiczen"] =
+      actualList["opcje_listy"]["ilosc_cwiczen"] + 1;
+    for (let i = 1; i <= counterSeries; i++) {
+      actualList["seria_" + i]["cw_" + counterWorkOut] = templateObject;
+    }
+    console.log(this.state.data);
+    this.setState({
+      //uzycie tylko po to by sie przerenderowal App  "Sztucznie"
+      id: idActualList
+    });
   };
   handleAddNewList = () => {
     const tmp_list = this.state.list;
@@ -145,11 +157,13 @@ class App extends Component {
     }
   };
   render() {
+    console.log("App");
+    console.log(this.state.data);
     return (
       <div className="App">
         <TypeList ChangeTypeList={this.handleChangeTypeList} />
         {this.state.type ? (
-          <ListFBW
+          <ListFBW //brak funkcji usucienia cwiczenia / wyczyszczenia/usuniecia listy
             changeId={this.handlechangeId}
             addWorkOut={this.handleAddWorkOut} //dodanie cwiczenia do wybranej listy
             addNewList={this.handleAddNewList} //dodanie nowej listy
