@@ -175,6 +175,27 @@ class App extends Component {
       });
     }
   };
+  handlerChangeValueOptionList = object => {
+    console.log(object);
+    const data = this.state.data;
+    const option_list = [
+      "",
+      "ilosc_przerwy_cw",
+      "ilosc_przerwy_ser",
+      "ilosc_ser"
+    ];
+    //dalej bez setState!! WARNING!!
+    data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
+      option_list[object.id_input]
+    ] = object.value_input;
+
+    console.log(
+      data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
+        option_list[object.id_input]
+      ]
+    );
+    this.setState({});
+  };
   render() {
     console.log("App");
     // console.log(this.state.data);
@@ -189,6 +210,7 @@ class App extends Component {
             positionWorkOut={this.handlePositionWorkOut} //mozliwosc zamiany miejscami cwiczen
             data={this.state.data.FBW} //wysylana lista
             idList={this.state.id} //id listy
+            changeInputList={this.handlerChangeValueOptionList}
           />
         ) : (
           <ListWeight

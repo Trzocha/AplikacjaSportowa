@@ -4,11 +4,14 @@ import OptionList from "./OptionList";
 
 const Panel = props => {
   const id = props.idList;
-  console.log(id);
+  console.log("Panel: " + props.data);
   return (
     <>
       <h1>Lista cwiczen: </h1>
-      <OptionList data={props.data["lista_" + id].opcje_listy} />
+      <OptionList
+        data={props.data["lista_" + id].opcje_listy}
+        changeValue={props.changeInputValue}
+      />
       <ul>
         <OptionPanel data={props.data["lista_" + id]} idList={id} />
       </ul>
