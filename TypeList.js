@@ -1,16 +1,29 @@
 import React, { Component } from "react";
 
 class TypeList extends Component {
-  //   handleChangeTypeList = e => {
-
-  //     this.props.ChangeTypeList(e.target.value);
-  //   };
+  state = {
+    isConfirmed: true
+  };
+  handleChange = e => {
+    this.props.ChangeTypeList(e);
+    this.setState(prevState => ({
+      isConfirmed: !prevState.isConfirmed
+    }));
+  };
   render() {
     return (
       <>
-        <form onChange={this.props.ChangeTypeList}>
-          <input type="radio" name="gender" value="FBW" /> Z własna masą ciała
-          <input type="radio" name="gender" value="WEIGHT" /> Z ciężarami
+        <form onChange={this.handleChange}>
+          <input
+            type="radio"
+            id="FBW"
+            name="gender"
+            value="FBW"
+            checked={this.state.isConfirmed}
+          />
+          <label htmlFor="FBW">Z własna masą ciała</label>
+          <input type="radio" id="WEIGHT" name="gender" value="WEIGHT" />
+          <label htmlFor="WEIGHT"> Z ciężarami</label>
         </form>
       </>
     );

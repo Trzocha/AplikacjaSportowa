@@ -33,16 +33,16 @@ var data = {
       },
       seria_2: {
         cw_1: {
-          name: "pompki",
-          opis: "polozyc sie na podlodze",
+          name: "pom",
+          opis: "na podlodze",
           ilosc_dod_obc: 10,
-          ilosc_powt_w_cw: 10
+          ilosc_powt_w_cw: 15
         },
         cw_2: {
-          name: "brzuszki",
-          opis: "na podlodze zginac sie",
+          name: "brzu",
+          opis: "zginac sie",
           ilosc_dod_obc: 5,
-          ilosc_powt_w_cw: 15
+          ilosc_powt_w_cw: 20
         }
       }
     },
@@ -111,7 +111,7 @@ class App extends Component {
     const actualList = this.state.data[name]["lista_" + idActualList];
     const counterSeries = actualList["opcje_listy"]["ilosc_ser"];
     let counterWorkOut = actualList["opcje_listy"]["ilosc_cwiczen"] + 1;
-    const templateObject = {
+    const templateWorkOut = {
       name: value,
       opis: "",
       ilosc_dod_obc: "",
@@ -121,21 +121,40 @@ class App extends Component {
     actualList["opcje_listy"]["ilosc_cwiczen"] =
       actualList["opcje_listy"]["ilosc_cwiczen"] + 1;
     for (let i = 1; i <= counterSeries; i++) {
-      actualList["seria_" + i]["cw_" + counterWorkOut] = templateObject;
+      actualList["seria_" + i]["cw_" + counterWorkOut] = templateWorkOut;
     }
     console.log(this.state.data);
     this.setState({
       //uzycie tylko po to by sie przerenderowal App  "Sztucznie"
-      id: idActualList
     });
   };
-  handleAddNewList = () => {
-    const tmp_list = this.state.list;
-    tmp_list.push({ task: [] });
-    this.setState({
-      list: tmp_list
-    });
-    this.handlechangeId(this.state.list.length);
+  handleAddNewList = name => {
+    console.log(name);
+    const templateList = {
+      opcje_listy: {
+        ilosc_przerwy_cw: "",
+        ilosc_przerwy_ser: "",
+        ilosc_ser: 1,
+        ilosc_cwiczen: 0
+      },
+      seria_1: {}
+    };
+
+    let actualData = this.state.data[name];
+    let amountList = actualData["ilosc_list"] + 1;
+    // console.log(amountList);
+
+    actualData["ilosc_list"] = actualData["ilosc_list"] + 1; //te operacje zmieniaja glowne dane bez setState!
+    actualData["lista_" + amountList] = templateList;
+
+    this.handlechangeId(amountList);
+
+    // const tmp_list = this.state.list;
+    // tmp_list.push({ task: [] });
+    // this.setState({
+    //   list: tmp_list
+    // });
+    // this.handlechangeId(this.state.list.length);
   };
   handlePositionWorkOut = () => {};
   handlechangeId = number => {
@@ -158,12 +177,12 @@ class App extends Component {
   };
   render() {
     console.log("App");
-    console.log(this.state.data);
+    // console.log(this.state.data);
     return (
       <div className="App">
         <TypeList ChangeTypeList={this.handleChangeTypeList} />
         {this.state.type ? (
-          <ListFBW //brak funkcji usucienia cwiczenia / wyczyszczenia/usuniecia listy
+          <ListFBW //brak funkcji usuniecia cwiczenia / wyczyszczenia/usuniecia listy
             changeId={this.handlechangeId}
             addWorkOut={this.handleAddWorkOut} //dodanie cwiczenia do wybranej listy
             addNewList={this.handleAddNewList} //dodanie nowej listy

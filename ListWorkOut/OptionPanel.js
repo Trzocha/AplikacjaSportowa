@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import OptionList from "./OptionWorkOut";
+import OptionWorkOut from "./OptionWorkOut";
 
 class OptionPanel extends Component {
   state = {
@@ -8,13 +8,21 @@ class OptionPanel extends Component {
     activeID: 0,
     serieMax: this.props.data["opcje_listy"]["ilosc_ser"],
     serieNumber: 1,
+    prevSerieNumber: 1,
     WorkOut: [],
-    counterWorkOut: this.props.data["opcje_listy"]["ilosc_cwiczen"] //tylko dla celów porównawczych componentDidUpdate
+    counterWorkOut: this.props.data["opcje_listy"]["ilosc_cwiczen"], //tylko dla celów porównawczych componentDidUpdate
+    actualIdList: this.props.idList
   };
-  starter = () => {
-    //montowanie nowej tablicy wyzbieranej z danch by map() cwiczenia
+  starter = flag => {
+    //montowanie nowej tablicy wyzbieranej z danch by wykonac map() cwiczenia
     const amountWorkOut = this.props.data["opcje_listy"]["ilosc_cwiczen"];
     let tmp_arr = [];
+    let flag_value = 1;
+    //flaga wykoanania  Did czy Update
+    if (flag) {
+      flag_value = this.state.serieNumber;
+      // console.log("starter: " + flag_value);
+    }
 
     for (let i = 1; i <= amountWorkOut; i++) {
       //dziala, ale czy da sie inaczej? Dlaczego gdy robie push obj_template do tmp_arry w kazdej iteracji pracuje na tym sanym tmp_object
@@ -25,7 +33,9 @@ class OptionPanel extends Component {
         valueButton: "Pokaż"
       };
       tmp_arr.push(obj_template);
-      tmp_arr[i - 1].name = this.props.data["seria_1"]["cw_" + i].name;
+      tmp_arr[i - 1].name = this.props.data["seria_" + flag_value][
+        "cw_" + i
+      ].name;
       tmp_arr[i - 1].number = i;
     }
     // console.log(tmp_arr);
@@ -35,15 +45,36 @@ class OptionPanel extends Component {
   };
   componentDidMount = () => {
     // console.log("did");
-    this.starter();
+    this.starter(false);
   };
   componentDidUpdate = () => {
-    const actualCOUNTER = this.props.data["opcje_listy"]["ilosc_cwiczen"];
+    console.log("did");
+    const actualCOUNTER = this.props.data["opcje_listy"]["ilosc_cwiczen"]; //gdy zmienia sie liczba cwiczen
     if (this.state.counterWorkOut !== actualCOUNTER) {
+      console.log("elo");
       this.starter();
       this.setState({
         counterWorkOut: actualCOUNTER
       });
+    }
+    // console.log(
+    //   "did: " + this.state.serieNumber + " , " + this.state.prevSerieNumber
+    // );
+    if (this.state.serieNumber !== this.state.prevSerieNumber) {
+      //gdy przechodzimy z jednej do drugiej serri
+      //wywoalanie przy zmianie serii
+      this.starter(true);
+      this.setState({
+        prevSerieNumber: this.state.serieNumber
+      });
+    }
+
+    if (this.state.actualIdList !== this.props.idList) {
+      //gdy zmienia sie cala lista
+      this.setState({
+        actualIdList: this.props.idList
+      });
+      this.starter();
     }
   };
   handleClik = e => {
@@ -73,20 +104,53 @@ class OptionPanel extends Component {
     }
   };
   checkSeries = e => {
-    console.log("check");
-    let new_serieNumber;
-    if (e.target.name === "Poprzedni") {
+    // console.log(e.target.value);
+    // debugger;
+    let new_serieNumber = 0;
+    if (e.target.value === "Poprzedni") {
       new_serieNumber = this.state.serieNumber - 1;
-      if (new_serieNumber > 1) {
+      if (new_serieNumber === 1) {
+        this.setState(prevState => ({
+          prevSerieNumber: this.state.serieNumber,
+          serieNumber: new_serieNumber,
+          buttonNext: !prevState.buttonNext,
+          buttonPrev: !prevState.buttonPrev
+        }));
+      } else if (new_serieNumber > 1) {
         this.setState({
           serieNumber: new_serieNumber
         });
       } else {
+        //stan zapobiegawczy
         this.setState(prevState => ({
-          buttonPrev: !this.prevState.buttonPrev
+          buttonPrev: !prevState.buttonPrev,
+          buttonNext: !prevState.buttonNext
         }));
       }
-    } else if (e.target.name === "Nastepny") {
+      // console.log("check: " + this.state.serieNumber);
+      // this.starter(true);
+    } else if (e.target.value === "Nastepny") {
+      new_serieNumber = this.state.serieNumber + 1;
+      if (new_serieNumber === this.state.serieMax) {
+        this.setState(prevState => ({
+          prevSerieNumber: this.state.serieNumber,
+          serieNumber: new_serieNumber,
+          buttonNext: !prevState.buttonNext,
+          buttonPrev: !prevState.buttonPrev
+        }));
+      } else if (new_serieNumber < this.state.serieMax) {
+        this.setState({
+          serieNumber: new_serieNumber
+        });
+      } else {
+        //stan zapobiegaczy
+        this.setState(prevState => ({
+          buttonNext: !prevState.buttonNext,
+          buttonPrev: !prevState.buttonPrev
+        }));
+      }
+      // console.log("check: " + this.state.serieNumber);
+      // this.starter(true);
     }
   };
   render() {
@@ -97,12 +161,14 @@ class OptionPanel extends Component {
           <input type="button" value="Poprzedni" onClick={this.checkSeries} />
         ) : null}
         <span>Seria {it.serieNumber}</span>
-        {it.buttonNext ? <input type="button" value="Nastepny" /> : null}
+        {it.buttonNext ? (
+          <input type="button" value="Nastepny" onClick={this.checkSeries} />
+        ) : null}
         {it.WorkOut.map(key => (
           <>
             <li>{key.name}</li>
             {key.visible ? (
-              <OptionList
+              <OptionWorkOut
                 data={
                   this.props.data["seria_" + it.serieNumber]["cw_" + key.number]
                 }

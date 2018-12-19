@@ -15,7 +15,7 @@ class ListFBW extends Component {
         />
         <Panel data={it.data} idList={it.idList} />
         <AddWorkOut add={it.addWorkOut} data={it.data.name} />
-        <NewList addNew={it.addNewList} />
+        <NewList addNew={it.addNewList} data={it.data.name} />
       </>
     );
   }
