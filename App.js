@@ -176,7 +176,7 @@ class App extends Component {
     }
   };
   handlerChangeValueOptionList = object => {
-    console.log(object);
+    // console.log(object);
     const data = this.state.data;
     const option_list = [
       "",
@@ -189,11 +189,27 @@ class App extends Component {
       option_list[object.id_input]
     ] = object.value_input;
 
-    console.log(
-      data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
-        option_list[object.id_input]
-      ]
-    );
+    // console.log(
+    //   data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
+    //     option_list[object.id_input]
+    //   ]
+    // );
+    this.setState({});
+  };
+  handlerChangeValueOptionWorkOut = object => {
+    // console.log(object);
+    const data = this.state.data;
+    const option_list = ["", "ilosc_powt_w_cw", "ilosc_dod_obc", "opis"];
+    // console.log(
+    //   data[object.list_name]["lista_" + object.list_number][
+    //     "seria_" + object.serie_number
+    //   ]["cw_" + object.workOut_number][option_list[object.id_input]]
+    // );
+    data[object.list_name]["lista_" + object.list_number][
+      "seria_" + object.serie_number
+    ]["cw_" + object.workOut_number][option_list[object.id_input]] =
+      object.value_input;
+
     this.setState({});
   };
   render() {
@@ -211,6 +227,7 @@ class App extends Component {
             data={this.state.data.FBW} //wysylana lista
             idList={this.state.id} //id listy
             changeInputList={this.handlerChangeValueOptionList}
+            changeInputWorkOut={this.handlerChangeValueOptionWorkOut}
           />
         ) : (
           <ListWeight

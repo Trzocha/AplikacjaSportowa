@@ -48,10 +48,10 @@ class OptionPanel extends Component {
     this.starter(false);
   };
   componentDidUpdate = () => {
-    console.log("did");
+    // console.log("did");
     const actualCOUNTER = this.props.data["opcje_listy"]["ilosc_cwiczen"]; //gdy zmienia sie liczba cwiczen
     if (this.state.counterWorkOut !== actualCOUNTER) {
-      console.log("elo");
+      // console.log("elo");
       this.starter();
       this.setState({
         counterWorkOut: actualCOUNTER
@@ -71,9 +71,18 @@ class OptionPanel extends Component {
 
     if (this.state.actualIdList !== this.props.idList) {
       //gdy zmienia sie cala lista
+      const currentMaxSeries = this.props.data["opcje_listy"]["ilosc_ser"];
       this.setState({
-        actualIdList: this.props.idList
+        actualIdList: this.props.idList,
+        serieMax: currentMaxSeries //nowa lista , nowy stan serii
       });
+      // debugger;
+      if (currentMaxSeries === 1) {
+        //button next musi zniknac bo jest jedna seria
+        this.setState({
+          buttonNext: false
+        });
+      }
       this.starter();
     }
   };
@@ -153,6 +162,15 @@ class OptionPanel extends Component {
       // this.starter(true);
     }
   };
+  changeValueWorkOut = (id, draft, number) => {
+    //przeslane id - ktory przycisk ,value - wartosc zmian , number- numer cwiczenia
+    // console.log(id + " , " + value + " , " + number);
+    // console.log(this.props.data);
+    const serieNumber = this.state.serieNumber; //numer serii
+    // const workOutNumber = number; //numer cwiczenia
+    // console.log(id + " , " + draft + " , " + serieNumber + " , " + number);
+    this.props.changeValue(id, draft, number, serieNumber);
+  };
   render() {
     const it = this.state;
     return (
@@ -172,6 +190,8 @@ class OptionPanel extends Component {
                 data={
                   this.props.data["seria_" + it.serieNumber]["cw_" + key.number]
                 }
+                changeValue={this.changeValueWorkOut}
+                number={key.number}
               />
             ) : null}
             <input

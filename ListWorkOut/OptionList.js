@@ -51,9 +51,9 @@ class OptionList extends Component {
     }
   };
   handleChange = e => {
-    console.log("change");
-    console.log(e.target.value);
-    console.log(this);
+    // console.log("change");
+    // console.log(e.target.value);
+    // console.log(this);
     this.setState({
       draft: e.target.value
     });

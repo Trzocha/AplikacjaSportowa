@@ -12,8 +12,20 @@ class ListFBW extends Component {
       list_number: this.props.idList,
       list_name: this.props.data.name
     };
-    console.log(object_change);
+    // console.log(object_change);
     this.props.changeInputList(object_change);
+  };
+  handlerChangeOptionWorkOut = (id, draft, numberWorkOut, serieNumber) => {
+    const object_change = {
+      id_input: id,
+      value_input: draft,
+      workOut_number: numberWorkOut,
+      serie_number: serieNumber,
+      list_number: this.props.idList,
+      list_name: this.props.data.name
+    };
+    // console.log(object_change);
+    this.props.changeInputWorkOut(object_change);
   };
   render() {
     const it = this.props;
@@ -26,7 +38,8 @@ class ListFBW extends Component {
         <Panel
           data={it.data}
           idList={it.idList}
-          changeInputValue={this.handlerChangeOptionList}
+          changeInputValueList={this.handlerChangeOptionList}
+          changeInputValueWorkOut={this.handlerChangeOptionWorkOut}
         />
         <AddWorkOut add={it.addWorkOut} data={it.data.name} />
         <NewList addNew={it.addNewList} data={it.data.name} />

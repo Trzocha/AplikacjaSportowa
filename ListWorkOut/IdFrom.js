@@ -23,7 +23,7 @@ class IdForm extends Component {
   };
   supplyIdArray = () => {
     //wypelnienie id listy
-    console.log(this.props.lenghtList);
+    // console.log(this.props.lenghtList);
     const newArr = [];
     for (let i = 0; i < this.props.lenghtList; i++) {
       //bylo this.state.lenght, lecz opozmialo to wyswietlanie odpowiednich list
