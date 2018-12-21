@@ -41,6 +41,7 @@ class IdForm extends Component {
     this.props.changeId(e.target.value); //funckja odpowiedzialna za zmiane zawartosci list wg id
   };
   render() {
+    console.log("IdForm");
     return (
       <select onChange={this.handleChangeId} value={this.state.value}>
         {this.state.idArray.map(number => (

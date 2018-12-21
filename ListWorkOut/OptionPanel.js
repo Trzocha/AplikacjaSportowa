@@ -78,13 +78,16 @@ class OptionPanel extends Component {
       });
       // debugger;
       if (currentMaxSeries === 1) {
-        //button next musi zniknac bo jest jedna seria
+        //button next musi zniknac bo jest jedna seria gdy dodajemy liste
         this.setState({
           buttonNext: false
         });
       }
       this.starter();
     }
+
+    //gdy zmienia sie liczba serii
+    // if()
   };
   handleClik = e => {
     //obsluga pojawiania i chowania sie opcji dla cwiczenia
@@ -173,6 +176,7 @@ class OptionPanel extends Component {
   };
   render() {
     const it = this.state;
+    console.log("OptionPanel");
     return (
       <>
         {it.buttonPrev ? (

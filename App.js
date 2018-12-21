@@ -156,6 +156,9 @@ class App extends Component {
     // });
     // this.handlechangeId(this.state.list.length);
   };
+  handleAddSeries = () => {
+    console.log("handleAddSeries");
+  };
   handlePositionWorkOut = () => {};
   handlechangeId = number => {
     this.setState({
@@ -184,6 +187,24 @@ class App extends Component {
       "ilosc_przerwy_ser",
       "ilosc_ser"
     ];
+
+    if (object.id_input === "3") {
+      //jezeli jest zmiana w 3 inpuie = ilosc serii , nalezy wywolac funkcje dodajaca
+      //serie w danej liscie, można dodać warunek gdy zmiana ilosci serii jest na taka sama wartosc
+      const data_series_number = this.state.data[object.list_name][
+        "lista_" + object.list_number
+      ]["opcje_listy"]["ilosc_ser"];
+      const current_series_number = object.value_input;
+      // console.log(data_series_number + " , " + current_series_number);
+
+      //WARNING!! Zamiana serii miejscami, nie ma sensu, poniewaz ustawiam wlasciwosci tak jak ma wygladac trening
+      if (data_series_number < current_series_number) {
+        // dodaj kolejna serie
+        this.handleAddSeries();
+      } else if (data_series_number > current_series_number) {
+        //usun serie aktualnie wlaczona
+      }
+    }
     //dalej bez setState!! WARNING!!
     data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
       option_list[object.id_input]

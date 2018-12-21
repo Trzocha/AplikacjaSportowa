@@ -61,6 +61,7 @@ class OptionList extends Component {
   changeInput = () => {};
   render() {
     const it = this.props.data;
+    console.log("OptionList")
     return (
       <>
         Ilosc Przerwy miedzy cwiczeniami [sek]:{it.ilosc_przerwy_cw + "   "}

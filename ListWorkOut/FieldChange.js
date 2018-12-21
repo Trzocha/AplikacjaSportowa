@@ -1,6 +1,7 @@
 import React from "react";
 
 const FieldChange = props => {
+  console.log("FieldChange");
   return (
     <form>
       {props.text ? (

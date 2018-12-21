@@ -4,7 +4,7 @@ import OptionList from "./OptionList";
 
 const Panel = props => {
   const id = props.idList;
-  // console.log("Panel: " + props.data);
+  console.log("Panel");
   return (
     <>
       <h1>Lista cwiczen: </h1>

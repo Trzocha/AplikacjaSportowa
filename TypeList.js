@@ -11,6 +11,7 @@ class TypeList extends Component {
     }));
   };
   render() {
+    console.log("TypeList");
     return (
       <>
         <form onChange={this.handleChange}>

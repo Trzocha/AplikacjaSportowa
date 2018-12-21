@@ -68,6 +68,7 @@ class OptionWorkOut extends Component {
   };
   render() {
     const it = this.props.data;
+    console.log("OptionWorkOut");
     return (
       <>
         Ilość powturzeń w cwiczeniu: {it["ilosc_powt_w_cw"]}{" "}
