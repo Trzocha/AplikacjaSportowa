@@ -21,7 +21,6 @@ class OptionPanel extends Component {
     //flaga wykoanania  Did czy Update
     if (flag) {
       flag_value = this.state.serieNumber;
-      // console.log("starter: " + flag_value);
     }
 
     for (let i = 1; i <= amountWorkOut; i++) {
@@ -38,28 +37,22 @@ class OptionPanel extends Component {
       ].name;
       tmp_arr[i - 1].number = i;
     }
-    // console.log(tmp_arr);
     this.setState({
       WorkOut: tmp_arr
     });
   };
   componentDidMount = () => {
-    // console.log("did");
     this.starter(false);
   };
   componentDidUpdate = () => {
-    // console.log("did");
     const actualCOUNTER = this.props.data["opcje_listy"]["ilosc_cwiczen"]; //gdy zmienia sie liczba cwiczen
     if (this.state.counterWorkOut !== actualCOUNTER) {
-      // console.log("elo");
       this.starter();
       this.setState({
         counterWorkOut: actualCOUNTER
       });
     }
-    // console.log(
-    //   "did: " + this.state.serieNumber + " , " + this.state.prevSerieNumber
-    // );
+
     if (this.state.serieNumber !== this.state.prevSerieNumber) {
       //gdy przechodzimy z jednej do drugiej serri
       //wywoalanie przy zmianie serii
@@ -76,28 +69,47 @@ class OptionPanel extends Component {
         actualIdList: this.props.idList,
         serieMax: currentMaxSeries //nowa lista , nowy stan serii
       });
-      // debugger;
       if (currentMaxSeries === 1) {
         //button next musi zniknac bo jest jedna seria gdy dodajemy liste
         this.setState({
-          buttonNext: false
+          buttonNext: false,
+          buttonPrev: false
         });
       }
       this.starter();
     }
 
     //gdy zmienia sie liczba serii
-    // if()
+    if (this.state.serieMax !== this.props.data["opcje_listy"]["ilosc_ser"]) {
+      console.log("ZMIANA");
+      if (this.props.data["opcje_listy"]["ilosc_ser"] == 1) {
+        //sprawdzenie. w przypadku dodania nowej listy liczba serii jest rowna 0
+        //wiec jest brak widocznych przyciskow, lecz gdy dodaje druga serie przycisk next ma sie pojawic
+        this.setState({
+          serieMax: this.props.data["opcje_listy"]["ilosc_ser"]
+        });
+      } else {
+        this.setState({
+          serieMax: this.props.data["opcje_listy"]["ilosc_ser"],
+          buttonNext: true
+        });
+      }
+    }
+    //gdy usuwam serie ustawiam podglad listy na pierwsza serie
+    if (this.props.data["opcje_listy"]["ilosc_ser"] < this.state.serieNumber) {
+      //do zrobienia: sa 3 serie i jestem na 2 seri, usuwam serie ostatnia lecz nie wskakuje do seri pierwszej
+      //lub moze widoku nie zmineiac a pobawic sie w chowanie przyciskow
+      this.setState({
+        serieNumber: 1,
+        prevSerieNumber: 1
+      });
+    }
   };
   handleClik = e => {
     //obsluga pojawiania i chowania sie opcji dla cwiczenia
-    let st = this.state.WorkOut.slice(); //kopiuje cala liste, a w setState cala podmieniam
+    let st = this.state.WorkOut.slice(); //kopiuje cala tablice, a w setState cala podmieniam
     const id = e.target.name;
     const value = e.target.value;
-    // console.log(
-    //   "id:" + id + " , value: " + value + " ,st: " + st[id - 1].visible
-    // );
-    // let target = this.state.idWorkOut[id].valueButton;
 
     if (value === "Pokaż") {
       st[id - 1].valueButton = "Ukryj";
@@ -116,62 +128,44 @@ class OptionPanel extends Component {
     }
   };
   checkSeries = e => {
-    // console.log(e.target.value);
-    // debugger;
     let new_serieNumber = 0;
     if (e.target.value === "Poprzedni") {
       new_serieNumber = this.state.serieNumber - 1;
-      if (new_serieNumber === 1) {
-        this.setState(prevState => ({
+      if (new_serieNumber == 1) {
+        this.setState({
           prevSerieNumber: this.state.serieNumber,
           serieNumber: new_serieNumber,
-          buttonNext: !prevState.buttonNext,
-          buttonPrev: !prevState.buttonPrev
-        }));
+          buttonNext: true,
+          buttonPrev: false
+        });
       } else if (new_serieNumber > 1) {
         this.setState({
-          serieNumber: new_serieNumber
+          serieNumber: new_serieNumber,
+          buttonNext: true
         });
-      } else {
-        //stan zapobiegawczy
-        this.setState(prevState => ({
-          buttonPrev: !prevState.buttonPrev,
-          buttonNext: !prevState.buttonNext
-        }));
       }
-      // console.log("check: " + this.state.serieNumber);
-      // this.starter(true);
     } else if (e.target.value === "Nastepny") {
       new_serieNumber = this.state.serieNumber + 1;
-      if (new_serieNumber === this.state.serieMax) {
-        this.setState(prevState => ({
+      console.log(new_serieNumber);
+      if (new_serieNumber == this.state.serieMax) {
+        this.setState({
           prevSerieNumber: this.state.serieNumber,
           serieNumber: new_serieNumber,
-          buttonNext: !prevState.buttonNext,
-          buttonPrev: !prevState.buttonPrev
-        }));
+          buttonPrev: true,
+          buttonNext: false
+        });
       } else if (new_serieNumber < this.state.serieMax) {
         this.setState({
-          serieNumber: new_serieNumber
+          serieNumber: new_serieNumber,
+          buttonPrev: true
         });
-      } else {
-        //stan zapobiegaczy
-        this.setState(prevState => ({
-          buttonNext: !prevState.buttonNext,
-          buttonPrev: !prevState.buttonPrev
-        }));
       }
-      // console.log("check: " + this.state.serieNumber);
-      // this.starter(true);
     }
   };
   changeValueWorkOut = (id, draft, number) => {
     //przeslane id - ktory przycisk ,value - wartosc zmian , number- numer cwiczenia
-    // console.log(id + " , " + value + " , " + number);
-    // console.log(this.props.data);
     const serieNumber = this.state.serieNumber; //numer serii
-    // const workOutNumber = number; //numer cwiczenia
-    // console.log(id + " , " + draft + " , " + serieNumber + " , " + number);
+
     this.props.changeValue(id, draft, number, serieNumber);
   };
   render() {

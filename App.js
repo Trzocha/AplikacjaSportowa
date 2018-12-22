@@ -89,7 +89,6 @@ var data = {
 };
 var dataJson = JSON.stringify(data);
 var dataJsonParse = JSON.parse(dataJson);
-// console.log(dataJsonParse.FBW["lista_" + 1]);
 
 class App extends Component {
   constructor(props) {
@@ -104,11 +103,9 @@ class App extends Component {
     //nowe cwiczenie musi pojawic sie w kazdej serii + zwiekszyc o jeden ilosc cwiczen, w aktualnej liscie
     //potrzebne informacje: jaki rodzaj listy, ktora lista[OK], nazwa cwiczenia
 
-    //WARRING moze generowac błedy ponieważ niby dane przypisałem do zmiennych a i tak pracuje na orginalnym obiekcie
-    //brak uzycia setState!!!!
-    console.log(value + " , " + name);
+    const copy_data = JSON.parse(JSON.stringify(this.state.data)); //kopiowanie glebokie
     const idActualList = this.state.id;
-    const actualList = this.state.data[name]["lista_" + idActualList];
+    const actualList = copy_data[name]["lista_" + idActualList];
     const counterSeries = actualList["opcje_listy"]["ilosc_ser"];
     let counterWorkOut = actualList["opcje_listy"]["ilosc_cwiczen"] + 1;
     const templateWorkOut = {
@@ -123,13 +120,11 @@ class App extends Component {
     for (let i = 1; i <= counterSeries; i++) {
       actualList["seria_" + i]["cw_" + counterWorkOut] = templateWorkOut;
     }
-    console.log(this.state.data);
     this.setState({
-      //uzycie tylko po to by sie przerenderowal App  "Sztucznie"
+      data: copy_data
     });
   };
   handleAddNewList = name => {
-    console.log(name);
     const templateList = {
       opcje_listy: {
         ilosc_przerwy_cw: "",
@@ -140,24 +135,52 @@ class App extends Component {
       seria_1: {}
     };
 
-    let actualData = this.state.data[name];
+    let copy_data = JSON.parse(JSON.stringify(this.state.data));
+    let actualData = copy_data[name];
     let amountList = actualData["ilosc_list"] + 1;
-    // console.log(amountList);
 
-    actualData["ilosc_list"] = actualData["ilosc_list"] + 1; //te operacje zmieniaja glowne dane bez setState!
-    actualData["lista_" + amountList] = templateList;
+    actualData["ilosc_list"] = actualData["ilosc_list"] + 1; //zwiekszenie liczby list
+    actualData["lista_" + amountList] = templateList; //dodanie szablonu listy
+
+    this.setState({
+      data: copy_data
+    });
 
     this.handlechangeId(amountList);
-
-    // const tmp_list = this.state.list;
-    // tmp_list.push({ task: [] });
-    // this.setState({
-    //   list: tmp_list
-    // });
-    // this.handlechangeId(this.state.list.length);
   };
-  handleAddSeries = () => {
-    console.log("handleAddSeries");
+  handleAddSeries = (object, copy_data) => {
+    const number_series =
+      copy_data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
+        "ilosc_ser"
+      ] + 1;
+
+    const template_series =
+      copy_data[object.list_name]["lista_" + object.list_number]["seria_1"]; //szablon to kopia pierwszej serii
+
+    copy_data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
+      "ilosc_ser"
+    ] = number_series;
+
+    copy_data[object.list_name]["lista_" + object.list_number][
+      "seria_" + number_series
+    ] = template_series;
+  };
+  handleDeleteSeries = (object, copy_data) => {
+    //pomysl na usuwaie serii: usuwam ostatnia serie, ponieważ robie x serii a jezeli nie daje rady zrobic x+1 to po co mi
+    // ta seria. Cwiczenia są te same w kazdej serii
+
+    const max_number_series =
+      copy_data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
+        "ilosc_ser"
+      ];
+    if (max_number_series > 1) {
+      delete copy_data[object.list_name]["lista_" + object.list_number][
+        "seria_" + max_number_series
+      ];
+      copy_data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
+        "ilosc_ser"
+      ] = max_number_series - 1;
+    }
   };
   handlePositionWorkOut = () => {};
   handlechangeId = number => {
@@ -166,8 +189,6 @@ class App extends Component {
     });
   };
   handleChangeTypeList = e => {
-    //OK
-    console.log(e.target.value);
     if (e.target.value === "FBW") {
       this.setState({
         type: true
@@ -179,63 +200,39 @@ class App extends Component {
     }
   };
   handlerChangeValueOptionList = object => {
-    // console.log(object);
-    const data = this.state.data;
-    const option_list = [
-      "",
-      "ilosc_przerwy_cw",
-      "ilosc_przerwy_ser",
-      "ilosc_ser"
-    ];
+    const copy_data = JSON.parse(JSON.stringify(this.state.data));
+    const option_list = ["", "ilosc_przerwy_cw", "ilosc_przerwy_ser"];
 
     if (object.id_input === "3") {
-      //jezeli jest zmiana w 3 inpuie = ilosc serii , nalezy wywolac funkcje dodajaca
-      //serie w danej liscie, można dodać warunek gdy zmiana ilosci serii jest na taka sama wartosc
-      const data_series_number = this.state.data[object.list_name][
-        "lista_" + object.list_number
-      ]["opcje_listy"]["ilosc_ser"];
-      const current_series_number = object.value_input;
-      // console.log(data_series_number + " , " + current_series_number);
-
-      //WARNING!! Zamiana serii miejscami, nie ma sensu, poniewaz ustawiam wlasciwosci tak jak ma wygladac trening
-      if (data_series_number < current_series_number) {
-        // dodaj kolejna serie
-        this.handleAddSeries();
-      } else if (data_series_number > current_series_number) {
-        //usun serie aktualnie wlaczona
-      }
+      this.handleAddSeries(object, copy_data);
+    } else if (object.id_input === "4") {
+      console.log("USUN");
+      this.handleDeleteSeries(object, copy_data);
+    } else {
+      copy_data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
+        option_list[object.id_input]
+      ] = object.value_input;
     }
-    //dalej bez setState!! WARNING!!
-    data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
-      option_list[object.id_input]
-    ] = object.value_input;
 
-    // console.log(
-    //   data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
-    //     option_list[object.id_input]
-    //   ]
-    // );
-    this.setState({});
+    this.setState({
+      data: copy_data
+    });
   };
   handlerChangeValueOptionWorkOut = object => {
-    // console.log(object);
-    const data = this.state.data;
+    const copy_data = JSON.parse(JSON.stringify(this.state.data));
     const option_list = ["", "ilosc_powt_w_cw", "ilosc_dod_obc", "opis"];
-    // console.log(
-    //   data[object.list_name]["lista_" + object.list_number][
-    //     "seria_" + object.serie_number
-    //   ]["cw_" + object.workOut_number][option_list[object.id_input]]
-    // );
-    data[object.list_name]["lista_" + object.list_number][
+
+    copy_data[object.list_name]["lista_" + object.list_number][
       "seria_" + object.serie_number
     ]["cw_" + object.workOut_number][option_list[object.id_input]] =
       object.value_input;
 
-    this.setState({});
+    this.setState({
+      data: copy_data
+    });
   };
   render() {
     console.log("App");
-    // console.log(this.state.data);
     return (
       <div className="App">
         <TypeList ChangeTypeList={this.handleChangeTypeList} />
@@ -247,8 +244,8 @@ class App extends Component {
             positionWorkOut={this.handlePositionWorkOut} //mozliwosc zamiany miejscami cwiczen
             data={this.state.data.FBW} //wysylana lista
             idList={this.state.id} //id listy
-            changeInputList={this.handlerChangeValueOptionList}
-            changeInputWorkOut={this.handlerChangeValueOptionWorkOut}
+            changeInputList={this.handlerChangeValueOptionList} //funkcja zmian w opcjach listy
+            changeInputWorkOut={this.handlerChangeValueOptionWorkOut} //funkcja zmian w opcjach cwiczenia
           />
         ) : (
           <ListWeight

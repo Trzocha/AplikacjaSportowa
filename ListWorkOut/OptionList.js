@@ -5,7 +5,6 @@ class OptionList extends Component {
   state = {
     flagButton_1: false,
     flagButton_2: false,
-    flagButton_3: false,
     draft: ""
   };
   //funcja dziala nastepujaco , gdy flaga przycisku ustawiona jest na true, to nastepne jego przycisniecie daje "zatwuerdz zmienna",
@@ -13,14 +12,12 @@ class OptionList extends Component {
   //jest prawdziwy i wywoluje funkcje, ktora zbiera potrzebne dane by wywolac funcke w App i dokonac zmiany w glownym obiecie DANE
   handleClick = e => {
     let clearDraft = false;
-    // console.log(e.target.id);
-    // console.log(e.target.value);
+
     if (e.target.id === "1") {
       this.setState(prevState => ({
         flagButton_1: !prevState.flagButton_1
       }));
       if (this.state.flagButton_1) {
-        // console.log(e.target.id + " , " + this.state.draft);
         this.props.changeValue(e.target.id, this.state.draft);
         clearDraft = true;
       }
@@ -29,19 +26,12 @@ class OptionList extends Component {
         flagButton_2: !prevState.flagButton_2
       }));
       if (this.state.flagButton_2) {
-        // console.log(e.target.id + " , " + this.state.draft);
         this.props.changeValue(e.target.id, this.state.draft);
         clearDraft = true;
       }
-    } else if (e.target.id === "3") {
-      this.setState(prevState => ({
-        flagButton_3: !prevState.flagButton_3
-      }));
-      if (this.state.flagButton_3) {
-        // console.log(e.target.id + " , " + this.state.draft);
-        this.props.changeValue(e.target.id, this.state.draft);
-        clearDraft = true;
-      }
+    } else if (e.target.id === "3" || e.target.id === "4") {
+      //gdy dodaje serie lub usuwam
+      this.props.changeValue(e.target.id, "");
     }
 
     if (clearDraft) {
@@ -51,9 +41,6 @@ class OptionList extends Component {
     }
   };
   handleChange = e => {
-    // console.log("change");
-    // console.log(e.target.value);
-    // console.log(this);
     this.setState({
       draft: e.target.value
     });
@@ -61,7 +48,7 @@ class OptionList extends Component {
   changeInput = () => {};
   render() {
     const it = this.props.data;
-    console.log("OptionList")
+    console.log("OptionList");
     return (
       <>
         Ilosc Przerwy miedzy cwiczeniami [sek]:{it.ilosc_przerwy_cw + "   "}
@@ -101,22 +88,13 @@ class OptionList extends Component {
         )}
         <br />
         Ilosc serii: {it.ilosc_ser}{" "}
-        {this.state.flagButton_3 ? (
-          <FieldChange
-            min="1"
-            max="10"
-            id="3"
-            handleClick={this.handleClick}
-            handleChange={this.handleChange}
-          />
-        ) : (
-          <input
-            type="button"
-            id="3"
-            value="Zmien"
-            onClick={this.handleClick}
-          />
-        )}
+        <input //nalezy zmienic z tego co jest na 2 przycisku "dadaj" , "usun"
+          type="button"
+          id="3"
+          value="Dodaj"
+          onClick={this.handleClick}
+        />
+        <input type="button" id="4" value="Usun" onClick={this.handleClick} />
         <br />
       </>
     );

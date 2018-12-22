@@ -12,7 +12,7 @@ class ListFBW extends Component {
       list_number: this.props.idList,
       list_name: this.props.data.name
     };
-    // console.log(object_change);
+    //console.log(object_change);
     this.props.changeInputList(object_change);
   };
   handlerChangeOptionWorkOut = (id, draft, numberWorkOut, serieNumber) => {
@@ -29,7 +29,7 @@ class ListFBW extends Component {
   };
   render() {
     const it = this.props;
-    console.log("ListFBW")
+    console.log("ListFBW");
     return (
       <>
         <IdForm //OK
