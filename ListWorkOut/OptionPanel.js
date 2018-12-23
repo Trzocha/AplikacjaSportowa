@@ -11,7 +11,8 @@ class OptionPanel extends Component {
     prevSerieNumber: 1,
     WorkOut: [],
     counterWorkOut: this.props.data["opcje_listy"]["ilosc_cwiczen"], //tylko dla celów porównawczych componentDidUpdate
-    actualIdList: this.props.idList
+    actualIdList: this.props.idList,
+    flaglastSeries: false
   };
   starter = flag => {
     //montowanie nowej tablicy wyzbieranej z danch by wykonac map() cwiczenia
@@ -91,18 +92,59 @@ class OptionPanel extends Component {
       } else {
         this.setState({
           serieMax: this.props.data["opcje_listy"]["ilosc_ser"],
-          buttonNext: true
+          buttonNext: true,
+          flaglastSeries: false
         });
       }
     }
-    //gdy usuwam serie ustawiam podglad listy na pierwsza serie
-    if (this.props.data["opcje_listy"]["ilosc_ser"] < this.state.serieNumber) {
+    //gdy usuwam serie
+    if (this.props.data["opcje_listy"]["ilosc_ser"] <= this.state.serieNumber) {
       //do zrobienia: sa 3 serie i jestem na 2 seri, usuwam serie ostatnia lecz nie wskakuje do seri pierwszej
       //lub moze widoku nie zmineiac a pobawic sie w chowanie przyciskow
-      this.setState({
-        serieNumber: 1,
-        prevSerieNumber: 1
-      });
+
+      if (this.props.data["opcje_listy"]["ilosc_ser"] === 1) {
+        //skrajny przypadek gdy sa 2 serie a ja usuwam jedna i jedna zostaje
+
+        if (!this.state.flaglastSeries) {
+          if (
+            this.state.serieNumber > this.props.data["opcje_listy"]["ilosc_ser"]
+          ) {
+            //jezeli aktualnie znajduje sie widok na 2 serii i wlaśnia ta 2 serie usuwam. Ustawiam widok na 1 serie
+            //chowam przycik i ustawiam flage
+            this.setState({
+              serieNumber: 1,
+              prevSerieNumber: 1,
+              buttonPrev: false,
+              flaglastSeries: true
+            });
+          } else if (
+            this.state.serieNumber ===
+            this.props.data["opcje_listy"]["ilosc_ser"]
+          ) {
+            //jezeli jestem na 1 serri a usuwam 2, chowam przycisk i ustawiam flage
+            this.setState({
+              buttonNext: false,
+              flaglastSeries: true
+            });
+          }
+        }
+      } else if (
+        this.props.data["opcje_listy"]["ilosc_ser"] < this.state.serieNumber
+      ) {
+        if (
+          this.state.serieNumber - 1 ===
+          this.props.data["opcje_listy"]["ilosc_ser"]
+        ) {
+          //jezeli jest wiecej niz 2 serie np 3 i widok jest ustawiony na 3, ustawiam na widok o jeden mniejszy
+          //i chowam przycisk next
+          console.log("!!!!!!!");
+          this.setState({
+            serieNumber: this.props.data["opcje_listy"]["ilosc_ser"],
+            prevSerieNumber: this.props.data["opcje_listy"]["ilosc_ser"],
+            buttonNext: false
+          });
+        }
+      }
     }
   };
   handleClik = e => {
