@@ -5,25 +5,28 @@ class IdForm extends Component {
     super(props);
     this.state = {
       idArray: [],
-      lenght: this.props.lenghtList,
       value: 1 //wartosc ktora pokazuje <select>
     };
   }
   componentDidMount = () => {
     this.supplyIdArray();
   };
-  componentDidUpdate = () => {
-    if (this.props.lenghtList !== this.state.lenght) {
-      this.setState({
-        lenght: this.props.lenghtList,
-        value: this.props.lenghtList //odpowiedzialny za to, gdy dodajemy nowa liste <select value{}> skoczylo na stworzona liste
-      });
+  componentDidUpdate = prevProps => {
+    //sprawdza dlugosci list przed usunieciem lub po dodaniu
+    if (
+      prevProps.lenghtList < this.props.lenghtList ||
+      prevProps.lenghtList > this.props.lenghtList
+    ) {
+      if (this.props.idList === this.props.lenghtList) {
+        this.setState({
+          value: this.props.lenghtList //odpowiedzialny za to, gdy dodajemy nowa liste <select value{}> skoczylo na stworzona liste
+        });
+      }
       this.supplyIdArray();
     }
   };
   supplyIdArray = () => {
     //wypelnienie id listy
-    // console.log(this.props.lenghtList);
     const newArr = [];
     for (let i = 0; i < this.props.lenghtList; i++) {
       //bylo this.state.lenght, lecz opozmialo to wyswietlanie odpowiednich list

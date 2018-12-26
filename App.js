@@ -9,10 +9,10 @@ import "./App.css";
 var data = {
   FBW: {
     name: "FBW",
-    ilosc_list: 2,
+    ilosc_list: 4,
     lista_1: {
       opcje_listy: {
-        ilosc_przerwy_cw: 30,
+        ilosc_przerwy_cw: 1,
         ilosc_przerwy_ser: 120,
         ilosc_ser: 2,
         ilosc_cwiczen: 2
@@ -48,7 +48,7 @@ var data = {
     },
     lista_2: {
       opcje_listy: {
-        ilosc_przerwy_cw: 30,
+        ilosc_przerwy_cw: 2,
         ilosc_przerwy_ser: 120,
         ilosc_ser: 2,
         ilosc_cwiczen: 2
@@ -76,6 +76,78 @@ var data = {
         },
         cw_2: {
           name: "brzuszki",
+          opis: "na podlodze zginac sie",
+          ilosc_dod_obc: 5,
+          ilosc_powt_w_cw: 15
+        }
+      }
+    },
+    lista_3: {
+      opcje_listy: {
+        ilosc_przerwy_cw: 3,
+        ilosc_przerwy_ser: 120,
+        ilosc_ser: 2,
+        ilosc_cwiczen: 2
+      },
+      seria_1: {
+        cw_1: {
+          name: "34",
+          opis: "na drazku",
+          ilosc_dod_obc: 5,
+          ilosc_powt_w_cw: 10
+        },
+        cw_2: {
+          name: "55",
+          opis: "na podlodze zginac sie",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 15
+        }
+      },
+      seria_2: {
+        cw_1: {
+          name: "35",
+          opis: "na drazku",
+          ilosc_dod_obc: 10,
+          ilosc_powt_w_cw: 10
+        },
+        cw_2: {
+          name: "56",
+          opis: "na podlodze zginac sie",
+          ilosc_dod_obc: 5,
+          ilosc_powt_w_cw: 15
+        }
+      }
+    },
+    lista_4: {
+      opcje_listy: {
+        ilosc_przerwy_cw: 4,
+        ilosc_przerwy_ser: 120,
+        ilosc_ser: 2,
+        ilosc_cwiczen: 2
+      },
+      seria_1: {
+        cw_1: {
+          name: "45",
+          opis: "na drazku",
+          ilosc_dod_obc: 5,
+          ilosc_powt_w_cw: 10
+        },
+        cw_2: {
+          name: "66",
+          opis: "na podlodze zginac sie",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 15
+        }
+      },
+      seria_2: {
+        cw_1: {
+          name: "46",
+          opis: "na drazku",
+          ilosc_dod_obc: 10,
+          ilosc_powt_w_cw: 10
+        },
+        cw_2: {
+          name: "67",
           opis: "na podlodze zginac sie",
           ilosc_dod_obc: 5,
           ilosc_powt_w_cw: 15
@@ -182,6 +254,38 @@ class App extends Component {
       ] = max_number_series - 1;
     }
   };
+  handleDeleteList = object => {
+    if (this.state.data[object.name]["ilosc_list"] > 1) {
+      // console.log(data[object.name]["ilosc_list"]);
+      //zabezpieczenie, nie moge usunac wszystkich list, 1 zawsze zostanie
+      const copy_data = JSON.parse(JSON.stringify(this.state.data));
+
+      const counter = copy_data[object.name]["ilosc_list"] - object.id;
+
+      for (let i = object.id; i < counter + object.id; i++) {
+        //pentla przepisuje listy, przesuwajac na miejsce
+        //usunietej listy
+        copy_data[object.name]["lista_" + i] =
+          copy_data[object.name]["lista_" + (i + 1)];
+      }
+      copy_data[object.name]["ilosc_list"] =
+        copy_data[object.name]["ilosc_list"] - 1; //zmiejszenie liczby list
+      delete copy_data[object.name]["lista_" + (counter + object.id)]; //po przepisaniu , osttania lista jest zbedna
+
+      if (copy_data[object.name]["ilosc_list"] < object.id) {
+        this.setState({
+          data: copy_data,
+          id: object.id - 1
+        });
+      } else {
+        this.setState({
+          data: copy_data,
+          id: object.id
+        });
+      }
+      // console.log(copy_data);
+    }
+  };
   handlePositionWorkOut = () => {};
   handlechangeId = number => {
     this.setState({
@@ -241,6 +345,7 @@ class App extends Component {
             changeId={this.handlechangeId}
             addWorkOut={this.handleAddWorkOut} //dodanie cwiczenia do wybranej listy
             addNewList={this.handleAddNewList} //dodanie nowej listy
+            deleteList={this.handleDeleteList} //usuniecie listy
             positionWorkOut={this.handlePositionWorkOut} //mozliwosc zamiany miejscami cwiczen
             data={this.state.data.FBW} //wysylana lista
             idList={this.state.id} //id listy

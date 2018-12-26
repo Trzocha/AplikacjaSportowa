@@ -12,7 +12,8 @@ class OptionPanel extends Component {
     WorkOut: [],
     counterWorkOut: this.props.data["opcje_listy"]["ilosc_cwiczen"], //tylko dla celów porównawczych componentDidUpdate
     actualIdList: this.props.idList,
-    flaglastSeries: false
+    flaglastSeries: false,
+    flagPrevlastSeries: false
   };
   starter = flag => {
     //montowanie nowej tablicy wyzbieranej z danch by wykonac map() cwiczenia
@@ -45,8 +46,18 @@ class OptionPanel extends Component {
   componentDidMount = () => {
     this.starter(false);
   };
-  componentDidUpdate = () => {
+  componentDidUpdate = prevProps => {
     const actualCOUNTER = this.props.data["opcje_listy"]["ilosc_cwiczen"]; //gdy zmienia sie liczba cwiczen
+    // const deleteUpdate = this.props.deleteFlag;
+
+    if (prevProps.amountList !== this.props.amountList) {
+      this.starter(true);
+    }
+    // if (deleteUpdate) {
+    //   this.starter(true);
+    //   this.props.flagControl();
+    // }
+
     if (this.state.counterWorkOut !== actualCOUNTER) {
       this.starter();
       this.setState({
@@ -60,6 +71,16 @@ class OptionPanel extends Component {
       this.starter(true);
       this.setState({
         prevSerieNumber: this.state.serieNumber
+      });
+    }
+
+    //odblokowanie gdy jestem w widoku na przedostatniej serii (linia 158)
+    if (
+      this.state.serieNumber + 1 === this.state.serieMax &&
+      this.state.flagPrevlastSeries
+    ) {
+      this.setState({
+        flagPrevlastSeries: false
       });
     }
 
@@ -83,7 +104,7 @@ class OptionPanel extends Component {
     //gdy zmienia sie liczba serii
     if (this.state.serieMax !== this.props.data["opcje_listy"]["ilosc_ser"]) {
       console.log("ZMIANA");
-      if (this.props.data["opcje_listy"]["ilosc_ser"] == 1) {
+      if (parseInt(this.props.data["opcje_listy"]["ilosc_ser"]) === 1) {
         //sprawdzenie. w przypadku dodania nowej listy liczba serii jest rowna 0
         //wiec jest brak widocznych przyciskow, lecz gdy dodaje druga serie przycisk next ma sie pojawic
         this.setState({
@@ -144,6 +165,16 @@ class OptionPanel extends Component {
             buttonNext: false
           });
         }
+      } else if (
+        //linia 158 warunek , gdy jestem na przedosttanim widoku serii usuwam ostatnia serie , chowam przycisk next
+        this.props.data["opcje_listy"]["ilosc_ser"] ===
+          this.state.serieNumber &&
+        !this.state.flagPrevlastSeries
+      ) {
+        this.setState({
+          buttonNext: false,
+          flagPrevlastSeries: true
+        });
       }
     }
   };
@@ -173,7 +204,7 @@ class OptionPanel extends Component {
     let new_serieNumber = 0;
     if (e.target.value === "Poprzedni") {
       new_serieNumber = this.state.serieNumber - 1;
-      if (new_serieNumber == 1) {
+      if (new_serieNumber === 1) {
         this.setState({
           prevSerieNumber: this.state.serieNumber,
           serieNumber: new_serieNumber,
@@ -189,7 +220,7 @@ class OptionPanel extends Component {
     } else if (e.target.value === "Nastepny") {
       new_serieNumber = this.state.serieNumber + 1;
       console.log(new_serieNumber);
-      if (new_serieNumber == this.state.serieMax) {
+      if (new_serieNumber === this.state.serieMax) {
         this.setState({
           prevSerieNumber: this.state.serieNumber,
           serieNumber: new_serieNumber,
