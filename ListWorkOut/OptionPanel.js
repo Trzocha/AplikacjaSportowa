@@ -13,14 +13,15 @@ class OptionPanel extends Component {
     counterWorkOut: this.props.data["opcje_listy"]["ilosc_cwiczen"], //tylko dla celów porównawczych componentDidUpdate
     actualIdList: this.props.idList,
     flaglastSeries: false,
-    flagPrevlastSeries: false
+    flagPrevlastSeries: false,
+    flagChangeNameWorkOut: false
   };
   starter = flag => {
     //montowanie nowej tablicy wyzbieranej z danch by wykonac map() cwiczenia
     const amountWorkOut = this.props.data["opcje_listy"]["ilosc_cwiczen"];
     let tmp_arr = [];
     let flag_value = 1;
-    //flaga wykoanania  Did czy Update
+    //flaga wykoanania  Did czy Update (false did, true Update)
     if (flag) {
       flag_value = this.state.serieNumber;
     }
@@ -53,11 +54,12 @@ class OptionPanel extends Component {
     if (prevProps.amountList !== this.props.amountList) {
       this.starter(true);
     }
-    // if (deleteUpdate) {
-    //   this.starter(true);
-    //   this.props.flagControl();
-    // }
-
+    //flaga decyduje czy jest update tablicy WorkOut poprzez funkcje starter, flaga zmieniana jest gdy zmienia sie
+    //wartosc nazwy cwiczenia, nastepnie po aktualizacji tablicy WorkOut ,zmieniamy ponownie stan flagi na "false"
+    if (this.state.flagChangeNameWorkOut) {
+      this.starter(true);
+      this.changeNameWorkOut();
+    }
     if (this.state.counterWorkOut !== actualCOUNTER) {
       this.starter();
       this.setState({
@@ -103,7 +105,7 @@ class OptionPanel extends Component {
 
     //gdy zmienia sie liczba serii
     if (this.state.serieMax !== this.props.data["opcje_listy"]["ilosc_ser"]) {
-      console.log("ZMIANA");
+      // console.log("ZMIANA");
       if (parseInt(this.props.data["opcje_listy"]["ilosc_ser"]) === 1) {
         //sprawdzenie. w przypadku dodania nowej listy liczba serii jest rowna 0
         //wiec jest brak widocznych przyciskow, lecz gdy dodaje druga serie przycisk next ma sie pojawic
@@ -240,6 +242,12 @@ class OptionPanel extends Component {
     const serieNumber = this.state.serieNumber; //numer serii
 
     this.props.changeValue(id, draft, number, serieNumber);
+    this.changeNameWorkOut();
+  };
+  changeNameWorkOut = () => {
+    this.setState(prevState => ({
+      flagChangeNameWorkOut: !prevState.flagChangeNameWorkOut
+    }));
   };
   render() {
     const it = this.state;

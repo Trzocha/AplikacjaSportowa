@@ -6,6 +6,7 @@ class OptionWorkOut extends Component {
     flagButton_1: false,
     flagButton_2: false,
     flagButton_3: false,
+    flagButton_4: false,
     draft: ""
   };
   handleClick = e => {
@@ -42,6 +43,19 @@ class OptionWorkOut extends Component {
         flagButton_3: !prevState.flagButton_3
       }));
       if (this.state.flagButton_3) {
+        // console.log(e.target.id + " , " + this.state.draft);
+        this.props.changeValue(
+          e.target.id, //numer przyciku zmiany
+          this.state.draft, //wartosc zmiany
+          this.props.number //numer cwiczenia
+        );
+        clearDraft = true;
+      }
+    } else if (e.target.id === "4") {
+      this.setState(prevState => ({
+        flagButton_4: !prevState.flagButton_4
+      }));
+      if (this.state.flagButton_4) {
         // console.log(e.target.id + " , " + this.state.draft);
         this.props.changeValue(
           e.target.id, //numer przyciku zmiany
@@ -120,6 +134,22 @@ class OptionWorkOut extends Component {
             type="button"
             id="3"
             value="Zmien"
+            onClick={this.handleClick}
+          />
+        )}
+        <br />
+        {this.state.flagButton_4 ? (
+          <FieldChange
+            text="true"
+            id="4"
+            handleClick={this.handleClick}
+            handleChange={this.handleChange}
+          />
+        ) : (
+          <input
+            type="button"
+            id="4"
+            value="Zmien nazwe cwiczenia"
             onClick={this.handleClick}
           />
         )}

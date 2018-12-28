@@ -11,6 +11,9 @@ class NewList extends Component {
         <button onClick={() => this.props.deleteList(this.props.data)}>
           Usun Aktualna Liste
         </button>
+        <button onClick={() => this.props.clearList(this.props.data)}>
+          Wyczysc liste
+        </button>
       </div>
     );
   }
