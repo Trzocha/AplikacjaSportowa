@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import StartApp from "../src/StartApp";
+import StartApp from "../src/Views/StartApp";
 import ChosenList from "../src/ChosenList";
 
 var data = {
