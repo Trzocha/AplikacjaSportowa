@@ -1,10 +1,8 @@
-import React, { Component } from "react";
-import ViewFBW from "../Views/ViewFBW";
+import React from "react";
+import ControlView from "../Views/ControlView";
 
-class StartApp extends Component {
-  render() {
-    return <>{this.props.active ? <ViewFBW data={this.props.data} /> : null}</>;
-  }
-}
+const StartApp = props => {
+  return <>{props.active ? <ControlView data={props.data} /> : null}</>;
+};
 
 export default StartApp;

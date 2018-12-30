@@ -189,18 +189,14 @@ class ChosenList extends Component {
   };
   handlerChangeValueOptionWorkOut = object => {
     const copy_data = JSON.parse(JSON.stringify(this.state.data));
-    const option_list = ["", "ilosc_powt_w_cw", "ilosc_dod_obc", "opis"];
-    if (object.id_input === "4") {
-      const amount_series =
-        copy_data[object.list_name]["lista_" + object.list_number][
-          "opcje_listy"
-        ]["ilosc_ser"];
+    const option_list = ["", "ilosc_powt_w_cw", "ilosc_dod_obc"];
 
-      for (let i = 1; i <= amount_series; i++) {
-        copy_data[object.list_name]["lista_" + object.list_number][
-          "seria_" + i
-        ]["cw_" + object.workOut_number]["name"] = object.value_input;
-      }
+    if (object.id_input === "4") {
+      //input nazwy cwiczenia
+      this.changeValueInWorkOut(copy_data, object, "name");
+    } else if (object.id_input === "3") {
+      //input opisu cwiczenia
+      this.changeValueInWorkOut(copy_data, object, "opis");
     } else {
       copy_data[object.list_name]["lista_" + object.list_number][
         "seria_" + object.serie_number
@@ -212,6 +208,19 @@ class ChosenList extends Component {
       data: copy_data
     });
   };
+  //funckja pomocnicza do funkjci powyzej, zmiana wartosci inputa cwiczenia w kazdej serii
+  changeValueInWorkOut = (copy_data, object, string) => {
+    const amount_series =
+      copy_data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
+        "ilosc_ser"
+      ];
+    for (let i = 1; i <= amount_series; i++) {
+      copy_data[object.list_name]["lista_" + object.list_number]["seria_" + i][
+        "cw_" + object.workOut_number
+      ][string] = object.value_input;
+    }
+  };
+  //Tu musi byc jeszcze zagniezdzona funkcja do walidacji czy sa wszystkie dane i czy paramatry sa poprawne
   handlerClick = () => {
     const object = this.state.data[this.state.nameList][
       "lista_" + this.state.id
