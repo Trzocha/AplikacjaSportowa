@@ -80,6 +80,10 @@ class OptionWorkOut extends Component {
       draft: e.target.value
     });
   };
+  deleteWorkOut = () => {
+    const number_workout = this.props.number;
+    this.props.deleteWorkOut(number_workout);
+  };
   render() {
     const it = this.props.data;
     console.log("OptionWorkOut");
@@ -153,6 +157,11 @@ class OptionWorkOut extends Component {
             onClick={this.handleClick}
           />
         )}
+        <input
+          type="button"
+          value="Usuń cwiczenie"
+          onClick={this.deleteWorkOut}
+        />
         <br />
       </>
     );

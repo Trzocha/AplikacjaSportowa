@@ -35,6 +35,10 @@ class ListFBW extends Component {
     });
     this.props.deleteList(object_delete);
   };
+  handlerDeleteWorkOut = object => {
+    object.name = this.props.data.name;
+    this.props.deleteWorkOut(object);
+  };
   render() {
     const it = this.props;
     console.log("ListFBW");
@@ -50,6 +54,7 @@ class ListFBW extends Component {
           idList={it.idList}
           changeInputValueList={this.handlerChangeOptionList}
           changeInputValueWorkOut={this.handlerChangeOptionWorkOut}
+          deleteWorkOut={this.handlerDeleteWorkOut}
         />
         <AddWorkOut add={it.addWorkOut} data={it.data.name} />
         <NewList

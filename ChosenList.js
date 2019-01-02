@@ -130,6 +130,48 @@ class ChosenList extends Component {
       // console.log(copy_data);
     }
   };
+  //podobna zasada dzialani ajak usuniecie listy
+  handleDeleteWorkOut = object => {
+    const amountWorkOut = this.state.data[object.name][
+      "lista_" + object.id_list
+    ]["opcje_listy"]["ilosc_cwiczen"];
+    if (amountWorkOut > 1) {
+      //tylko gdy ilosc cwiczen jest wiecej usuniecie jej ma sens
+      const copy_data = JSON.parse(JSON.stringify(this.state.data));
+      const counter = amountWorkOut - object.number_workout;
+      const amountSeries = this.state.data[object.name][
+        "lista_" + object.id_list
+      ]["opcje_listy"]["ilosc_ser"];
+
+      for (let j = 1; j <= amountSeries; j++) {
+        for (
+          let i = object.number_workout;
+          i < counter + object.number_workout;
+          i++
+        ) {
+          //pentla przepisuje cwiczenia, przesuwajac na miejsce usunietego cwiczenia w kazej serii
+          copy_data[object.name]["lista_" + object.id_list]["seria_" + j][
+            "cw_" + i
+          ] =
+            copy_data[object.name]["lista_" + object.id_list]["seria_" + j][
+              "cw_" + (i + 1)
+            ];
+        }
+        delete copy_data[object.name]["lista_" + object.id_list]["seria_" + j][
+          "cw_" + (counter + object.number_workout)
+        ];
+      }
+
+      copy_data[object.name]["lista_" + object.id_list]["opcje_listy"][
+        "ilosc_cwiczen"
+      ] -= 1;
+
+      this.setState({
+        data: copy_data
+      });
+    }
+  };
+  helperDelete = () => {};
   handlerClearList = name => {
     const number_list = this.state.id;
     const copy_data = JSON.parse(JSON.stringify(this.state.data));
@@ -175,7 +217,7 @@ class ChosenList extends Component {
     if (object.id_input === "3") {
       this.handleAddSeries(object, copy_data);
     } else if (object.id_input === "4") {
-      console.log("USUN");
+      // console.log("USUN");
       this.handleDeleteSeries(object, copy_data);
     } else {
       copy_data[object.list_name]["lista_" + object.list_number]["opcje_listy"][
@@ -230,6 +272,7 @@ class ChosenList extends Component {
     }));
     this.props.hideList(object);
   };
+
   render() {
     console.log("ChosenList");
     return (
@@ -239,6 +282,7 @@ class ChosenList extends Component {
           <ListFBW //brak funkcji usuniecia cwiczenia / wyczyszczenia/usuniecia listy
             changeId={this.handlechangeId}
             addWorkOut={this.handleAddWorkOut} //dodanie cwiczenia do wybranej listy
+            deleteWorkOut={this.handleDeleteWorkOut}
             addNewList={this.handleAddNewList} //dodanie nowej listy
             deleteList={this.handleDeleteList} //usuniecie listy
             clearList={this.handlerClearList} //czyszczenie listy

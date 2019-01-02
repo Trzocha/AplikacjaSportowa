@@ -249,6 +249,13 @@ class OptionPanel extends Component {
       flagChangeNameWorkOut: !prevState.flagChangeNameWorkOut
     }));
   };
+  deleteWorkOut = number => {
+    const object = {
+      id_list: this.props.idList,
+      number_workout: number
+    };
+    this.props.deleteWorkOut(object);
+  };
   render() {
     const it = this.state;
     console.log("OptionPanel");
@@ -270,6 +277,7 @@ class OptionPanel extends Component {
                   this.props.data["seria_" + it.serieNumber]["cw_" + key.number]
                 }
                 changeValue={this.changeValueWorkOut}
+                deleteWorkOut={this.deleteWorkOut}
                 number={key.number}
               />
             ) : null}
