@@ -21,10 +21,6 @@ Koncepcja:
 
 
 //czysczenie opcji w danym cwiczeniu (ale czy to ma sens?)
-//zmiana nazwy cwiczenia
 //mozliwosc dodania zdjecia by mozna bylo poglodowo zobaczc jakie rozwijamy np partie miesniowe
 //mozliwosc zamiany miejscami cwiczenia
 
-
-//blad przy przechodzeniu z jednej grupy list do 2 brak ciaglosci, np jestem na 2 liscie wchodze w Weight , powracam
-//do FBW pokazuje opcje z 2 listy ale selected jest na 1 liscie

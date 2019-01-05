@@ -19,8 +19,6 @@ const Panel = props => {
           changeValue={props.changeInputValueWorkOut} //zmiana wlasciwosci w opcjach danego cwiczenia
           amountList={props.data["ilosc_list"]}
           deleteWorkOut={props.deleteWorkOut}
-          // deleteFlag = {props.deleteFlag}
-          // flagControl = {props.flagControl}
         />
       </ul>
     </>

@@ -5,7 +5,7 @@ class IdForm extends Component {
     super(props);
     this.state = {
       idArray: [],
-      value: 1 //wartosc ktora pokazuje <select>
+      value: this.props.idList || 1 //wartosc ktora pokazuje <select>
     };
   }
   componentDidMount = () => {
@@ -48,7 +48,7 @@ class IdForm extends Component {
     return (
       <select onChange={this.handleChangeId} value={this.state.value}>
         {this.state.idArray.map(number => (
-          <option>{number}</option>
+          <option key={number}>{number}</option>
         ))}
       </select>
     );

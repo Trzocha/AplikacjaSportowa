@@ -14,18 +14,20 @@ class OptionPanel extends Component {
     actualIdList: this.props.idList,
     flaglastSeries: false,
     flagPrevlastSeries: false,
-    flagChangeNameWorkOut: false
+    flagChangeNameWorkOut: false,
+    flag_delete: false
   };
   starter = flag => {
     //montowanie nowej tablicy wyzbieranej z danch by wykonac map() cwiczenia
     const amountWorkOut = this.props.data["opcje_listy"]["ilosc_cwiczen"];
     let tmp_arr = [];
     let flag_value = 1;
+
     //flaga wykoanania  Did czy Update (false did, true Update)
     if (flag) {
       flag_value = this.state.serieNumber;
+      var tmp_WorkOut = this.state.WorkOut.slice();
     }
-
     for (let i = 1; i <= amountWorkOut; i++) {
       //dziala, ale czy da sie inaczej? Dlaczego gdy robie push obj_template do tmp_arry w kazdej iteracji pracuje na tym sanym tmp_object
       let obj_template = {
@@ -34,12 +36,20 @@ class OptionPanel extends Component {
         visible: false,
         valueButton: "Pokaż"
       };
+
       tmp_arr.push(obj_template);
       tmp_arr[i - 1].name = this.props.data["seria_" + flag_value][
         "cw_" + i
       ].name;
       tmp_arr[i - 1].number = i;
+
+      if (flag) {
+        //przepisanie poprzednich stanow by przy zmianie danych opcje cwiczenia nie chowaly sie
+        tmp_arr[i - 1].visible = tmp_WorkOut[i - 1].visible;
+        tmp_arr[i - 1].valueButton = tmp_WorkOut[i - 1].valueButton;
+      }
     }
+    console.log("STARTER:" + tmp_arr);
     this.setState({
       WorkOut: tmp_arr
     });
@@ -63,7 +73,8 @@ class OptionPanel extends Component {
     if (this.state.counterWorkOut !== actualCOUNTER) {
       this.starter();
       this.setState({
-        counterWorkOut: actualCOUNTER
+        counterWorkOut: actualCOUNTER,
+        flag_delete: false
       });
     }
 
@@ -180,6 +191,25 @@ class OptionPanel extends Component {
       }
     }
   };
+  // componentWillUnmount = () => {
+  //   console.log("UND");
+  //   this.setState({
+  //     WorkOut: []
+  //   });
+  // };
+  // shouldComponentUpdate = () => {
+  //   const actualCounterWorkOut = this.props.data["opcje_listy"][
+  //     "ilosc_cwiczen"
+  //   ]; //gdy zmienia sie liczba cwiczen
+  //   const prevActualCOUNTERWorkOut = this.state.actualCounterWorkOut;
+  //   if (prevActualCOUNTERWorkOut !== actualCounterWorkOut) {
+  //     this.starter(true);
+  //     this.setState({
+  //       counterWorkOut: actualCounterWorkOut
+  //     });
+  //   }
+  //   return true;
+  // };
   handleClik = e => {
     //obsluga pojawiania i chowania sie opcji dla cwiczenia
     let st = this.state.WorkOut.slice(); //kopiuje cala tablice, a w setState cala podmieniam
@@ -254,42 +284,48 @@ class OptionPanel extends Component {
       id_list: this.props.idList,
       number_workout: number
     };
+    // this.componentWillUnmount();
+    this.setState({
+      flag_delete: true
+    });
     this.props.deleteWorkOut(object);
   };
   render() {
-    const it = this.state;
+    const it = this.props;
+    const { buttonPrev, serieNumber, buttonNext, WorkOut } = this.state;
+    console.log("WORKOUT: " + WorkOut);
     console.log("OptionPanel");
     return (
       <>
-        {it.buttonPrev ? (
+        {buttonPrev ? (
           <input type="button" value="Poprzedni" onClick={this.checkSeries} />
         ) : null}
-        <span>Seria {it.serieNumber}</span>
-        {it.buttonNext ? (
+        <span>Seria {serieNumber}</span>
+        {buttonNext ? (
           <input type="button" value="Nastepny" onClick={this.checkSeries} />
         ) : null}
-        {it.WorkOut.map(key => (
-          <>
-            <li>{key.name}</li>
-            {key.visible ? (
-              <OptionWorkOut
-                data={
-                  this.props.data["seria_" + it.serieNumber]["cw_" + key.number]
-                }
-                changeValue={this.changeValueWorkOut}
-                deleteWorkOut={this.deleteWorkOut}
-                number={key.number}
-              />
-            ) : null}
-            <input
-              type="button"
-              onClick={this.handleClik}
-              value={key.valueButton}
-              name={key.number}
-            />
-            <br />
-          </>
-        ))}
+        {!this.state.flag_delete
+          ? WorkOut.map(key => (
+              <>
+                <li>{key.name}</li>
+                {key.visible ? (
+                  <OptionWorkOut
+                    data={it.data["seria_" + serieNumber]["cw_" + key.number]}
+                    changeValue={this.changeValueWorkOut}
+                    deleteWorkOut={this.deleteWorkOut}
+                    number={key.number}
+                  />
+                ) : null}
+                <input
+                  type="button"
+                  onClick={this.handleClik}
+                  value={key.valueButton}
+                  name={key.number}
+                />
+                <br />
+              </>
+            ))
+          : null}
       </>
     );
   }

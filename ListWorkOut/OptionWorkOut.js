@@ -73,9 +73,6 @@ class OptionWorkOut extends Component {
     }
   };
   handleChange = e => {
-    // console.log("changeWorkOut");
-    // console.log(e.target.value);
-    // console.log(this);
     this.setState({
       draft: e.target.value
     });
@@ -84,8 +81,11 @@ class OptionWorkOut extends Component {
     const number_workout = this.props.number;
     this.props.deleteWorkOut(number_workout);
   };
+
+  //renderuje jeden element powyzej od usunietego
   render() {
     const it = this.props.data;
+    console.log(it);
     console.log("OptionWorkOut");
     return (
       <>
