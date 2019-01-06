@@ -15,7 +15,7 @@ class OptionPanel extends Component {
     flaglastSeries: false,
     flagPrevlastSeries: false,
     flagChangeNameWorkOut: false,
-    flag_delete: false
+    flag_delete: false // jak kon pod gore, blokowanie renderownia tablict WorkOut przy usuwaniu cw
   };
   starter = flag => {
     //montowanie nowej tablicy wyzbieranej z danch by wykonac map() cwiczenia
@@ -49,7 +49,6 @@ class OptionPanel extends Component {
         tmp_arr[i - 1].valueButton = tmp_WorkOut[i - 1].valueButton;
       }
     }
-    console.log("STARTER:" + tmp_arr);
     this.setState({
       WorkOut: tmp_arr
     });
@@ -171,7 +170,6 @@ class OptionPanel extends Component {
         ) {
           //jezeli jest wiecej niz 2 serie np 3 i widok jest ustawiony na 3, ustawiam na widok o jeden mniejszy
           //i chowam przycisk next
-          console.log("!!!!!!!");
           this.setState({
             serieNumber: this.props.data["opcje_listy"]["ilosc_ser"],
             prevSerieNumber: this.props.data["opcje_listy"]["ilosc_ser"],
@@ -191,25 +189,6 @@ class OptionPanel extends Component {
       }
     }
   };
-  // componentWillUnmount = () => {
-  //   console.log("UND");
-  //   this.setState({
-  //     WorkOut: []
-  //   });
-  // };
-  // shouldComponentUpdate = () => {
-  //   const actualCounterWorkOut = this.props.data["opcje_listy"][
-  //     "ilosc_cwiczen"
-  //   ]; //gdy zmienia sie liczba cwiczen
-  //   const prevActualCOUNTERWorkOut = this.state.actualCounterWorkOut;
-  //   if (prevActualCOUNTERWorkOut !== actualCounterWorkOut) {
-  //     this.starter(true);
-  //     this.setState({
-  //       counterWorkOut: actualCounterWorkOut
-  //     });
-  //   }
-  //   return true;
-  // };
   handleClik = e => {
     //obsluga pojawiania i chowania sie opcji dla cwiczenia
     let st = this.state.WorkOut.slice(); //kopiuje cala tablice, a w setState cala podmieniam
@@ -251,7 +230,6 @@ class OptionPanel extends Component {
       }
     } else if (e.target.value === "Nastepny") {
       new_serieNumber = this.state.serieNumber + 1;
-      console.log(new_serieNumber);
       if (new_serieNumber === this.state.serieMax) {
         this.setState({
           prevSerieNumber: this.state.serieNumber,
@@ -284,7 +262,6 @@ class OptionPanel extends Component {
       id_list: this.props.idList,
       number_workout: number
     };
-    // this.componentWillUnmount();
     this.setState({
       flag_delete: true
     });
@@ -292,11 +269,16 @@ class OptionPanel extends Component {
   };
   render() {
     const it = this.props;
-    const { buttonPrev, serieNumber, buttonNext, WorkOut } = this.state;
-    console.log("WORKOUT: " + WorkOut);
-    console.log("OptionPanel");
+    const {
+      buttonPrev,
+      serieNumber,
+      buttonNext,
+      WorkOut,
+      flag_delete
+    } = this.state;
+    // console.log("OptionPanel")
     return (
-      <>
+      <React.Fragment>
         {buttonPrev ? (
           <input type="button" value="Poprzedni" onClick={this.checkSeries} />
         ) : null}
@@ -304,9 +286,9 @@ class OptionPanel extends Component {
         {buttonNext ? (
           <input type="button" value="Nastepny" onClick={this.checkSeries} />
         ) : null}
-        {!this.state.flag_delete
+        {!flag_delete
           ? WorkOut.map(key => (
-              <>
+              <React.Fragment key={key.name}>
                 <li>{key.name}</li>
                 {key.visible ? (
                   <OptionWorkOut
@@ -323,10 +305,10 @@ class OptionPanel extends Component {
                   name={key.number}
                 />
                 <br />
-              </>
+              </React.Fragment>
             ))
           : null}
-      </>
+      </React.Fragment>
     );
   }
 }

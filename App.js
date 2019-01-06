@@ -1,6 +1,19 @@
 import React, { Component } from "react";
 import StartApp from "../src/Views/StartApp";
 import ChosenList from "../src/ChosenList";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+ body{
+   padding : 0;
+   margin :0;
+   background:#34495e;
+   color : white
+ }
+ *,*::after, *::before{
+   box-sizing:border-box
+ }
+`;
 
 var data = {
   FBW: {
@@ -155,16 +168,14 @@ class App extends Component {
     });
   };
   render() {
-    console.log("App");
+    const { activeClock, data, object_data } = this.state;
     return (
       <div className="App">
-        {!this.state.activeClock ? (
-          <ChosenList data={this.state.data} hideList={this.handlerHideList} />
+        <GlobalStyle />
+        {!activeClock ? (
+          <ChosenList data={data} hideList={this.handlerHideList} />
         ) : (
-          <StartApp
-            data={this.state.object_data}
-            active={this.state.activeClock}
-          />
+          <StartApp data={object_data} active={activeClock} />
         )}
       </div>
     );

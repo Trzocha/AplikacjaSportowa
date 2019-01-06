@@ -135,8 +135,7 @@ class ChosenList extends Component {
     const amountWorkOut = this.state.data[object.name][
       "lista_" + object.id_list
     ]["opcje_listy"]["ilosc_cwiczen"];
-    console.log(object);
-    console.log(amountWorkOut);
+
     if (amountWorkOut > 1) {
       //tylko gdy ilosc cwiczen jest wiecej usuniecie jej ma sens
       const copy_data = JSON.parse(JSON.stringify(this.state.data));
@@ -167,7 +166,6 @@ class ChosenList extends Component {
       copy_data[object.name]["lista_" + object.id_list]["opcje_listy"][
         "ilosc_cwiczen"
       ] -= 1;
-      console.log(copy_data);
       this.setState({
         data: copy_data
       });
@@ -200,12 +198,12 @@ class ChosenList extends Component {
     });
   };
   handleChangeTypeList = e => {
-    if (e.target.value === "FBW") {
+    if (e.target.id === "FBW") {
       this.setState({
         type: true,
         nameList: "FBW"
       });
-    } else if (e.target.value === "WEIGHT") {
+    } else if (e.target.id === "WEIGHT") {
       this.setState({
         type: false,
         nameList: "WEIGHT"
@@ -276,8 +274,7 @@ class ChosenList extends Component {
   };
 
   render() {
-    console.log("ChosenList");
-    console.log(this.state.data);
+    // console.log("ChosenList");
     return (
       <>
         <TypeList ChangeTypeList={this.handleChangeTypeList} />

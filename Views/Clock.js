@@ -13,10 +13,10 @@ function sketch(p) {
   let next = function() {};
 
   setInterval(function() {
-    if (second == 1) {
+    if (second === 1) {
       second = 61;
       minute = minute - 1;
-      if (minute == -1) {
+      if (minute === -1) {
         flagCounter = false;
         counter = 0;
         console.log("KONIEC");
@@ -47,14 +47,14 @@ function sketch(p) {
     p.translate(200, 200);
     p.rotate(-3.14 / 2);
 
-    if (minute == 2) {
+    if (minute === 2) {
       clock1();
       clock2();
       clock3();
-    } else if (minute == 1) {
+    } else if (minute === 1) {
       clock1();
       clock2();
-    } else if (minute == 0) {
+    } else if (minute === 0) {
       clock1();
     }
     if (counter >= 100) {
@@ -77,7 +77,7 @@ function sketch(p) {
   let clock1 = function() {
     //najwiekszy zegar
     let turn = 6.28;
-    if (minute == 0) {
+    if (minute === 0) {
       turn = 0.1047 * second;
     }
     // console.log("0: " + turn + " minute: " + minute);
@@ -87,7 +87,7 @@ function sketch(p) {
 
   let clock2 = function() {
     let turn = 6.28;
-    if (minute == 1) {
+    if (minute === 1) {
       turn = 0.1047 * second;
     }
     //console.log("1: " + turn + " minute: " + minute);
@@ -97,7 +97,7 @@ function sketch(p) {
   let clock3 = function() {
     //najmniejszy zegar
     let turn = 6.28; //2PI
-    if (minute == 2) {
+    if (minute === 2) {
       turn = 0.1047 * second;
     }
     //console.log("2: " + turn + " minute: " + minute);

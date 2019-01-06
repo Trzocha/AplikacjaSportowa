@@ -5,7 +5,7 @@ const ViewEnd = () => {
     <>
       <h1>Koniec Treningu</h1>
       <p>Gratualcje</p>
-      <button>Powót</button>
+      <button>Koniec</button>
     </>
   );
 };

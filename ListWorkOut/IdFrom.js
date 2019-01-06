@@ -1,4 +1,43 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+
+const StyledDiv = styled.div`
+  position: relative;
+
+  select {
+    background: #2c3e50;
+    color: #eee;
+    padding: 5px;
+    margin-top: 10px;
+    width: 70px;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    -webkit-appearance: button;
+    outline: none;
+  }
+  :before {
+    content: "\f358";
+    position: absolute;
+    font-family: "Font Awesome 5 Free";
+    top: 10px;
+    left: 50%;
+    width: 35px;
+    height: 45px;
+    background: #455361;
+    border-radius: 0 5px 5px 0;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    color: #fff;
+    pointer-events: none;
+  }
+  :hover::before {
+    background: #455361;
+  }
+`;
 
 class IdForm extends Component {
   constructor(props) {
@@ -44,13 +83,15 @@ class IdForm extends Component {
     this.props.changeId(e.target.value); //funckja odpowiedzialna za zmiane zawartosci list wg id
   };
   render() {
-    console.log("IdForm");
+    // console.log("IdForm");
     return (
-      <select onChange={this.handleChangeId} value={this.state.value}>
-        {this.state.idArray.map(number => (
-          <option key={number}>{number}</option>
-        ))}
-      </select>
+      <StyledDiv>
+        <select onChange={this.handleChangeId} value={this.state.value}>
+          {this.state.idArray.map(number => (
+            <option key={number}>{number}</option>
+          ))}
+        </select>
+      </StyledDiv>
     );
   }
 }

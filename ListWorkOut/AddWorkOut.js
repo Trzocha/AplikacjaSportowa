@@ -22,7 +22,7 @@ class AddWorkOut extends Component {
     }
   };
   render() {
-    console.log("AddWorkOut");
+    // console.log("AddWorkOut");
     return (
       <>
         <input

@@ -41,7 +41,7 @@ class ListFBW extends Component {
   };
   render() {
     const it = this.props;
-    console.log("ListFBW");
+    // console.log("ListFBW");
     return (
       <>
         <IdForm //OK

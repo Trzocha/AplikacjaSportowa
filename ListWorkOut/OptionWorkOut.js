@@ -11,13 +11,11 @@ class OptionWorkOut extends Component {
   };
   handleClick = e => {
     let clearDraft = false;
-    // console.log(e.target.id);
     if (e.target.id === "1") {
       this.setState(prevState => ({
         flagButton_1: !prevState.flagButton_1
       }));
       if (this.state.flagButton_1) {
-        // console.log(e.target.id + " , " + this.state.draft);
         this.props.changeValue(
           e.target.id, //numer przyciku zmiany
           this.state.draft, //wartosc zmiany
@@ -30,7 +28,6 @@ class OptionWorkOut extends Component {
         flagButton_2: !prevState.flagButton_2
       }));
       if (this.state.flagButton_2) {
-        // console.log(e.target.id + " , " + this.state.draft);
         this.props.changeValue(
           e.target.id, //numer przyciku zmiany
           this.state.draft, //wartosc zmiany
@@ -43,7 +40,6 @@ class OptionWorkOut extends Component {
         flagButton_3: !prevState.flagButton_3
       }));
       if (this.state.flagButton_3) {
-        // console.log(e.target.id + " , " + this.state.draft);
         this.props.changeValue(
           e.target.id, //numer przyciku zmiany
           this.state.draft, //wartosc zmiany
@@ -56,7 +52,6 @@ class OptionWorkOut extends Component {
         flagButton_4: !prevState.flagButton_4
       }));
       if (this.state.flagButton_4) {
-        // console.log(e.target.id + " , " + this.state.draft);
         this.props.changeValue(
           e.target.id, //numer przyciku zmiany
           this.state.draft, //wartosc zmiany
@@ -85,8 +80,7 @@ class OptionWorkOut extends Component {
   //renderuje jeden element powyzej od usunietego
   render() {
     const it = this.props.data;
-    console.log(it);
-    console.log("OptionWorkOut");
+    // console.log("OptionWorkOut");
     return (
       <>
         Ilość powturzeń w cwiczeniu: {it["ilosc_powt_w_cw"]}{" "}
