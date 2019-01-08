@@ -5,35 +5,39 @@ import posed from "react-pose";
 
 const StyledSection = styled.section`
   position: relative;
-  width: 80%;
+  /* display: flex; */
+  width: 90%;
   margin: 0 auto;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
   background-color: #455361;
+  margin-bottom: 10px;
 `;
 
 const Header = styled.div`
-  padding: 10px 0 10px 10px;
+  flex-wrap: nowrap;
+  padding: 11px 0 12px 10px;
   text-align: left;
   font-family: "Play";
-  height: 50px;
+  height: 42px;
+  font-size: 12px;
 `;
 
-const PoseInput = posed.input({
-  show: {
-    width: "100px",
-    right: "75px"
-  },
-  hide: {
-    width: "30px",
-    right: "110px"
-  }
-});
+// const PoseInput = posed.input({
+//   show: {
+//     width: "100px",
+//     right: "75px"
+//   },
+//   hide: {
+//     width: "30px",
+//     right: "110px"
+//   }
+// });
 
-const Button = styled(PoseInput)`
+const Button = styled.input`
   position: absolute;
-  right: 75px;
-  width: 100px;
+  right: 20px;
+  width: 80px;
   color: #eee;
   border: 2px solid #eee;
   background-color: transparent;
@@ -42,7 +46,7 @@ const Button = styled(PoseInput)`
   margin: 0;
   padding: 0;
   border-radius: 8px;
-  font-size: 10px;
+  font-size: 8px;
   text-transform: uppercase;
   outline: none;
   :active {
@@ -50,7 +54,8 @@ const Button = styled(PoseInput)`
   }
 `;
 const Button2 = styled(Button)`
-  right: ${props => (props.value === "-" ? "140px" : "20px")};
+  width: 35px;
+  right: ${props => (props.value === "-" ? "65px" : "20px")};
 `;
 
 class OptionList extends Component {
@@ -111,11 +116,7 @@ class OptionList extends Component {
       <>
         <StyledSection>
           <Header>
-            <span>
-              {" "}
-              Ilosc przerwy miedzy cwiczeniami [sek] :
-              {it.ilosc_przerwy_cw + "   "}
-            </span>
+            <span>Przerwa między ćwiczeniami [sek]: {it.ilosc_przerwy_cw}</span>
             {this.state.flagButton_1 ? (
               <FieldChange
                 id="1"
@@ -134,9 +135,7 @@ class OptionList extends Component {
             <br />
           </Header>
           <Header>
-            <span>
-              Ilosc Przerwy miedzy seriami [sek] :{it.ilosc_przerwy_ser + "  "}
-            </span>
+            <span>Przerwa między seriami [sek]:{it.ilosc_przerwy_ser}</span>
             {this.state.flagButton_2 ? (
               <FieldChange
                 id="2"
@@ -154,7 +153,7 @@ class OptionList extends Component {
             <br />
           </Header>
           <Header>
-            <span>Ilosc serii :{it.ilosc_ser} </span>
+            <span>Ilość serii:{it.ilosc_ser} </span>
             <Button2
               type="button"
               id="3"

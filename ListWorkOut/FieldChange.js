@@ -9,13 +9,15 @@ const TextInput = styled.input`
   border-radius: 10px;
   padding: 2px;
   color: #2c3e50;
-  width: 100px;
-  right: 23%;
+  width: 40px;
+  right: 20%;
+  font-size: 8px;
+  line-height: 1.5;
 `;
 const Button = styled.input`
   position: absolute;
   right: 20px;
-  width: 100px;
+  width: 40px;
   color: #eee;
   border: 2px solid #eee;
   background-color: transparent;
@@ -24,7 +26,7 @@ const Button = styled.input`
   margin: 0;
   padding: 0;
   border-radius: 8px;
-  font-size: 10px;
+  font-size: 8px;
   text-transform: uppercase;
   outline: none;
   :active {
@@ -59,7 +61,7 @@ const FieldChange = props => {
       <Button
         type="submit"
         id={props.id}
-        value="Zatwierdz"
+        value="OK"
         onClick={props.handleClick}
       />
       <br />

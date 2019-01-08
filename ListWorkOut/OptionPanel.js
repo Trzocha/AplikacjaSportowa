@@ -1,5 +1,57 @@
 import React, { Component } from "react";
 import OptionWorkOut from "./OptionWorkOut";
+import styled from "styled-components";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const ButtonNext = styled.button`
+  position: relative;
+  background: transparent;
+  font-size: 15px;
+  margin: 5px;
+  border: none;
+  color: #eee;
+  flex-basis: 30%;
+  :disabled {
+    opacity: 0.3;
+  }
+`;
+const ButtonPrev = styled(ButtonNext)``;
+const ContainerAisle = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+`;
+const H1 = styled.h1`
+  margin: 5px;
+  flex-basis: 30%;
+  font-family: "Play";
+  font-size: 15px;
+  font-weight: 100;
+`;
+const ButtonShow = styled.input`
+  position: absolute;
+  flex-basis: 30%;
+  right: 20px;
+  width: 80px;
+  color: #eee;
+  border: 2px solid #eee;
+  background-color: transparent;
+  cursor: pointer;
+  line-height: 2;
+  padding: 0;
+  border-radius: 8px;
+  font-size: 8px;
+  text-transform: uppercase;
+  outline: none;
+  :active {
+    border: 2px solid #2ecc71;
+  }
+`;
+const H2 = styled.h2`
+  flex-basis: 70%;
+  text-align: left;
+  padding-left: 20px;
+`;
 
 class OptionPanel extends Component {
   state = {
@@ -213,7 +265,7 @@ class OptionPanel extends Component {
   };
   checkSeries = e => {
     let new_serieNumber = 0;
-    if (e.target.value === "Poprzedni") {
+    if (e.target.id === "Poprzedni") {
       new_serieNumber = this.state.serieNumber - 1;
       if (new_serieNumber === 1) {
         this.setState({
@@ -228,7 +280,7 @@ class OptionPanel extends Component {
           buttonNext: true
         });
       }
-    } else if (e.target.value === "Nastepny") {
+    } else if (e.target.id === "Nastepny") {
       new_serieNumber = this.state.serieNumber + 1;
       if (new_serieNumber === this.state.serieMax) {
         this.setState({
@@ -279,35 +331,50 @@ class OptionPanel extends Component {
     // console.log("OptionPanel")
     return (
       <React.Fragment>
-        {buttonPrev ? (
-          <input type="button" value="Poprzedni" onClick={this.checkSeries} />
-        ) : null}
-        <span>Seria {serieNumber}</span>
-        {buttonNext ? (
-          <input type="button" value="Nastepny" onClick={this.checkSeries} />
-        ) : null}
-        {!flag_delete
-          ? WorkOut.map(key => (
-              <React.Fragment key={key.name}>
-                <li>{key.name}</li>
-                {key.visible ? (
-                  <OptionWorkOut
-                    data={it.data["seria_" + serieNumber]["cw_" + key.number]}
-                    changeValue={this.changeValueWorkOut}
-                    deleteWorkOut={this.deleteWorkOut}
-                    number={key.number}
-                  />
-                ) : null}
-                <input
-                  type="button"
-                  onClick={this.handleClik}
-                  value={key.valueButton}
-                  name={key.number}
-                />
-                <br />
-              </React.Fragment>
-            ))
-          : null}
+        <ContainerAisle>
+          <ButtonNext
+            id="Poprzedni"
+            value=""
+            onClick={this.checkSeries}
+            className="fas fa-arrow-left"
+            disabled={!buttonPrev}
+          />
+          <H1>Seria {serieNumber}</H1>
+          <ButtonPrev
+            id="Nastepny"
+            value=""
+            onClick={this.checkSeries}
+            className="fas fa-arrow-right"
+            disabled={!buttonNext}
+          />
+        </ContainerAisle>
+        <ul>
+          {!flag_delete
+            ? WorkOut.map(key => (
+                <React.Fragment key={key.name}>
+                  <li>
+                    <H2>{key.name}</H2>
+                    <ButtonShow
+                      type="button"
+                      onClick={this.handleClik}
+                      value={key.valueButton}
+                      name={key.number}
+                    />
+                  </li>
+                  {key.visible ? (
+                    <OptionWorkOut
+                      data={it.data["seria_" + serieNumber]["cw_" + key.number]}
+                      changeValue={this.changeValueWorkOut}
+                      deleteWorkOut={this.deleteWorkOut}
+                      number={key.number}
+                    />
+                  ) : null}
+
+                  <br />
+                </React.Fragment>
+              ))
+            : null}
+        </ul>
       </React.Fragment>
     );
   }

@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 const Button = styled.button`
   width: 50%;
-  padding: 30px 30px 20px 30px;
+  padding: 20px 30px 20px 30px;
   text-decoration: none;
   text-align: center;
   font-family: "Play";
-  font-size: 18px;
+  font-size: 12px;
   color: #7f8c8d;
   cursor: pointer;
   background: #2c3e50;

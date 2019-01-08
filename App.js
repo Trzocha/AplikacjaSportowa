@@ -5,14 +5,28 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
  body{
-   padding : 0;
-   margin :0;
+   
    background:#34495e;
    color : white
  }
  *,*::after, *::before{
-   box-sizing:border-box
+   box-sizing:border-box;
+   padding : 0;
+   margin :0;
  }
+ li{
+   display:flex;
+   flex-direction:row;
+   justify-content: flex-start;
+   align-items:center;
+   list-style:none;
+   font-family: "Play";
+   font-size:12px;
+   height:30px;
+   /* border: 1px solid red; */
+   padding :8px 0;
+ }
+
 `;
 
 var data = {
@@ -28,13 +42,13 @@ var data = {
       },
       seria_1: {
         cw_1: {
-          name: "pompki",
+          name: "Pompki",
           opis: "polozyc sie na podlodze",
           ilosc_dod_obc: 5,
           ilosc_powt_w_cw: 10
         },
         cw_2: {
-          name: "brzuszki",
+          name: "Brzuszki",
           opis: "na podlodze zginac sie",
           ilosc_dod_obc: 0,
           ilosc_powt_w_cw: 15
@@ -42,13 +56,13 @@ var data = {
       },
       seria_2: {
         cw_1: {
-          name: "pom",
+          name: "Pom",
           opis: "na podlodze",
           ilosc_dod_obc: 10,
           ilosc_powt_w_cw: 15
         },
         cw_2: {
-          name: "brzu",
+          name: "Brzu",
           opis: "zginac sie",
           ilosc_dod_obc: 5,
           ilosc_powt_w_cw: 20
@@ -64,19 +78,19 @@ var data = {
       },
       seria_1: {
         cw_1: {
-          name: "podciaganie",
+          name: "Podciaganie",
           opis: "na drazku",
           ilosc_dod_obc: 5,
           ilosc_powt_w_cw: 10
         },
         cw_2: {
-          name: "brzuszki",
+          name: "Brzuszki",
           opis: "na podlodze zginac sie",
           ilosc_dod_obc: 0,
           ilosc_powt_w_cw: 15
         },
         cw_3: {
-          name: "triceps",
+          name: "Triceps",
           opis: "na maszynie",
           ilosc_dod_obc: 0,
           ilosc_powt_w_cw: 15
@@ -84,19 +98,19 @@ var data = {
       },
       seria_2: {
         cw_1: {
-          name: "podciaganie",
+          name: "Podciaganie",
           opis: "na drazku",
           ilosc_dod_obc: 10,
           ilosc_powt_w_cw: 10
         },
         cw_2: {
-          name: "brzuszki",
+          name: "Brzuszki",
           opis: "na podlodze zginac sie",
           ilosc_dod_obc: 5,
           ilosc_powt_w_cw: 15
         },
         cw_3: {
-          name: "triceps",
+          name: "Triceps",
           opis: "na maszynie",
           ilosc_dod_obc: 0,
           ilosc_powt_w_cw: 15

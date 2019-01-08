@@ -9,12 +9,12 @@ const StyledDiv = styled.div`
     color: #eee;
     padding: 5px;
     margin-top: 10px;
-    width: 70px;
-    height: 45px;
+    width: 50px;
+    height: 30px;
     border: none;
     border-radius: 5px;
-    font-size: 20px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
     -webkit-appearance: button;
     outline: none;
   }
@@ -24,13 +24,13 @@ const StyledDiv = styled.div`
     font-family: "Font Awesome 5 Free";
     top: 10px;
     left: 50%;
-    width: 35px;
-    height: 45px;
+    width: 25px;
+    height: 30px;
     background: #455361;
     border-radius: 0 5px 5px 0;
     text-align: center;
-    line-height: 50px;
-    font-size: 20px;
+    line-height: 32px;
+    font-size: 12px;
     color: #fff;
     pointer-events: none;
   }
