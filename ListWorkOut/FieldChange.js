@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import posed from "react-pose";
 
 const TextInput = styled.input`
   position: absolute;
@@ -9,10 +8,18 @@ const TextInput = styled.input`
   border-radius: 10px;
   padding: 2px;
   color: #2c3e50;
-  width: 40px;
+  width: ${props => (props.text ? "80px" : "40px")};
+  height: ${props => (props.text ? "50px" : "auto")};
   right: 20%;
   font-size: 8px;
   line-height: 1.5;
+`;
+const TextArea = styled.textarea`
+  width: 65%;
+  font-family: "Play";
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+  padding: 5px;
 `;
 const Button = styled.input`
   position: absolute;
@@ -34,23 +41,20 @@ const Button = styled.input`
   }
 `;
 
-// const PoseCointeiner = posed.div({
-//   show: {
-//     width: "100px",
-//     right: "20px"
-//   },
-//   hide: {
-//     width: "30px",
-//     right: "110px"
-//   }
-// });
-
 const FieldChange = props => {
   // console.log("FieldChange");
   return (
     <>
       {props.text ? (
-        <TextInput type="text" onChange={props.handleChange} />
+        <TextArea
+          name="text"
+          rows={props.row}
+          wrap="soft"
+          onChange={props.handleChange}
+          autoFocus="autoFocus"
+          maxLength={props.maxLength}
+          required
+        />
       ) : (
         <TextInput
           type="number"

@@ -24,3 +24,7 @@ Koncepcja:
 //mozliwosc dodania zdjecia by mozna bylo poglodowo zobaczc jakie rozwijamy np partie miesniowe
 //mozliwosc zamiany miejscami cwiczenia
 
+//blad mozliwosc usuniecia wszystkich cwiczen
+//blad przy usuwaniu pierwszej listy, 
+//w listFBW , funkcja delete ustawiam flage a nie ma wgl podanego stanu, cos zle przekopiowane? 
+

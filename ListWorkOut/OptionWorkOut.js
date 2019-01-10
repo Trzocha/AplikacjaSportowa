@@ -1,5 +1,61 @@
 import React, { Component } from "react";
 import FieldChange from "../ListWorkOut/FieldChange";
+import styled from "styled-components";
+
+const ContenerOptions = styled.form`
+  width: 95%;
+  margin: 0 auto;
+  font-family: "Play";
+  font-size: 12px;
+  background: #3e4a56;
+  padding-top: 5px;
+  border-radius: 10px;
+  text-align: left;
+`;
+const Button = styled.input`
+  position: absolute;
+  right: 20px;
+  width: 80px;
+  color: #eee;
+  border: 2px solid #eee;
+  background-color: transparent;
+  cursor: pointer;
+  line-height: 2;
+  margin: 0;
+  padding: 0;
+  border-radius: 8px;
+  font-size: 8px;
+  text-transform: uppercase;
+  outline: none;
+  flex-basis: 40%;
+  :active {
+    border: 2px solid #2ecc71;
+  }
+`;
+const Button2 = styled(Button)`
+  width: 140px;
+  padding: 2px 5px;
+`;
+const ButtonDelete = styled.button`
+  position: absolute;
+  right: 30px;
+  height: 30px;
+  color: #eee;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 20px;
+`;
+const WorkOut = styled.p`
+  position: absolute;
+  width: 55%;
+  text-justify: center;
+`;
+const Field = styled.fieldset`
+  height: ${props => (props.more ? "50px" : "30px")};
+  border: none;
+  margin: ${props => (props.more ? "10px 0 15px 10px" : "10px 0 0 10px")};
+`;
 
 class OptionWorkOut extends Component {
   state = {
@@ -76,88 +132,99 @@ class OptionWorkOut extends Component {
     const number_workout = this.props.number;
     this.props.deleteWorkOut(number_workout);
   };
-
-  //renderuje jeden element powyzej od usunietego
   render() {
     const it = this.props.data;
     // console.log("OptionWorkOut");
     return (
-      <>
-        Ilość powturzeń w cwiczeniu: {it["ilosc_powt_w_cw"]}{" "}
-        {this.state.flagButton_1 ? (
-          <FieldChange
-            min="1"
-            max="50"
-            id="1"
-            handleClick={this.handleClick}
-            handleChange={this.handleChange}
-          />
-        ) : (
-          <input
+      <ContenerOptions>
+        <Field>
+          <WorkOut>Powturzenia w cwiczeniu: {it["ilosc_powt_w_cw"]}</WorkOut>
+          {this.state.flagButton_1 ? (
+            <FieldChange
+              id="1"
+              handleClick={this.handleClick}
+              handleChange={this.handleChange}
+            />
+          ) : (
+            <Button
+              type="button"
+              id="1"
+              value="Zmien"
+              onClick={this.handleClick}
+            />
+          )}
+          <br />
+        </Field>
+        <Field>
+          <WorkOut>Dodadkowe obciażenie [kg]:{it["ilosc_dod_obc"]}</WorkOut>
+          {this.state.flagButton_2 ? (
+            <FieldChange
+              id="2"
+              handleClick={this.handleClick}
+              handleChange={this.handleChange}
+            />
+          ) : (
+            <Button
+              type="button"
+              id="2"
+              value="Zmien"
+              onClick={this.handleClick}
+            />
+          )}
+          <br />
+        </Field>
+        <Field more={true}>
+          <WorkOut>
+            Opis ćwieczenia: <br /> {it.opis}
+          </WorkOut>
+          {this.state.flagButton_3 ? (
+            <FieldChange
+              row="2"
+              maxLenght="80"
+              text="true"
+              id="3"
+              handleClick={this.handleClick}
+              handleChange={this.handleChange}
+            />
+          ) : (
+            <Button
+              type="button"
+              id="3"
+              value="Zmien"
+              onClick={this.handleClick}
+            />
+          )}
+          <br />
+        </Field>
+        <Field>
+          {this.state.flagButton_4 ? (
+            <FieldChange
+              row="1"
+              maxLenght="30"
+              text="true"
+              id="4"
+              handleClick={this.handleClick}
+              handleChange={this.handleChange}
+            />
+          ) : (
+            <Button2
+              type="button"
+              id="4"
+              value="Zmień nazwe ćwiczenia"
+              onClick={this.handleClick}
+            />
+          )}
+        </Field>
+        <Field>
+          <ButtonDelete
             type="button"
-            id="1"
-            value="Zmien"
-            onClick={this.handleClick}
+            value=""
+            onClick={this.deleteWorkOut}
+            className="fas fa-trash-alt"
           />
-        )}
-        <br />
-        Ilość dodadkowego obciażenia [kg]:{it["ilosc_dod_obc"]}
-        {this.state.flagButton_2 ? (
-          <FieldChange
-            min="0"
-            max="50"
-            id="2"
-            handleClick={this.handleClick}
-            handleChange={this.handleChange}
-          />
-        ) : (
-          <input
-            type="button"
-            id="2"
-            value="Zmien"
-            onClick={this.handleClick}
-          />
-        )}
-        <br />
-        Opis cwieczenia: {it.opis}{" "}
-        {this.state.flagButton_3 ? (
-          <FieldChange
-            text="true"
-            id="3"
-            handleClick={this.handleClick}
-            handleChange={this.handleChange}
-          />
-        ) : (
-          <input
-            type="button"
-            id="3"
-            value="Zmien"
-            onClick={this.handleClick}
-          />
-        )}
-        <br />
-        {this.state.flagButton_4 ? (
-          <FieldChange
-            text="true"
-            id="4"
-            handleClick={this.handleClick}
-            handleChange={this.handleChange}
-          />
-        ) : (
-          <input
-            type="button"
-            id="4"
-            value="Zmien nazwe cwiczenia"
-            onClick={this.handleClick}
-          />
-        )}
-        <input
-          type="button"
-          value="Usuń cwiczenie"
-          onClick={this.deleteWorkOut}
-        />
-        <br />
-      </>
+          <br />
+        </Field>
+      </ContenerOptions>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Panel from "./Panel.js";
-import AddWorkOut from "./AddWorkOut.js";
+// import AddWorkOut from "./AddWorkOut.js";
 import NewList from "./NewList";
 import IdForm from "../ListWorkOut/IdFrom";
 
@@ -55,8 +55,9 @@ class ListFBW extends Component {
           changeInputValueList={this.handlerChangeOptionList}
           changeInputValueWorkOut={this.handlerChangeOptionWorkOut}
           deleteWorkOut={this.handlerDeleteWorkOut}
+          addWorkOut={it.addWorkOut}
         />
-        <AddWorkOut add={it.addWorkOut} data={it.data.name} />
+        {/* <AddWorkOut add={it.addWorkOut} data={it.data.name} /> */}
         <NewList
           addNew={it.addNewList}
           data={it.data.name}

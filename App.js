@@ -23,8 +23,10 @@ const GlobalStyle = createGlobalStyle`
    font-family: "Play";
    font-size:12px;
    height:30px;
-   /* border: 1px solid red; */
    padding :8px 0;
+ }
+ ul{
+   margin-top:10px;
  }
 
 `;

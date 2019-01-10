@@ -1,6 +1,7 @@
 import React from "react";
-import OptionPanel from "./OptionPanel";
-import OptionList from "./OptionList";
+import PanelSettingsWO from "./PanelSettingsWO";
+import PanelSettingsList from "./PanelSettingsList";
+import PanelAddWorkOut from "./PanelAddWorkOut";
 import styled from "styled-components";
 
 const H1 = styled.h1`
@@ -24,18 +25,19 @@ const Panel = props => {
   return (
     <>
       <H1>Lista Ćwiczeń: </H1>
-      <OptionList
+      <PanelSettingsList
         data={props.data["lista_" + id].opcje_listy}
         changeValue={props.changeInputValueList} //zmiana wlasciwosci w opcjach listy
       />
       <StyledSection>
-        <OptionPanel
+        <PanelSettingsWO
           data={props.data["lista_" + id]}
           idList={id}
           changeValue={props.changeInputValueWorkOut} //zmiana wlasciwosci w opcjach danego cwiczenia
           amountList={props.data["ilosc_list"]}
           deleteWorkOut={props.deleteWorkOut}
         />
+        <PanelAddWorkOut addWorkOut={props.addWorkOut} data={props.data.name} />
       </StyledSection>
     </>
   );
