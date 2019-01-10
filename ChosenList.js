@@ -2,7 +2,29 @@ import React, { Component } from "react";
 import ListFBW from "./ListWorkOut/ListFBW";
 import ListWeight from "../src/ListWeight/ListWeight";
 import TypeList from "../src/TypeList";
-import "./App.css";
+import styled from "styled-components";
+
+const Button = styled.button`
+  position: relative;
+  width: 25%;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  background: #00b16a;
+  color: #eee;
+  text-align: left;
+  padding-left: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+  :before {
+    position: absolute;
+    font-size: 22px;
+    right: 10px;
+    transform: translate(0, -15%);
+  }
+`;
 
 class ChosenList extends Component {
   constructor(props) {
@@ -299,13 +321,18 @@ class ChosenList extends Component {
             addNewList={this.handleAddNewList}
           />
         )}
-        {!this.state.activeApp ? (
+        {/* {!this.state.activeApp ? (
           <input
             type="button"
             value="Uchuchom App"
             onClick={this.handlerClick}
           />
-        ) : null}
+        ) : null} */}
+        {!this.state.activeApp && (
+          <Button onClick={this.handlerClick} className="fas fa-play">
+            Start
+          </Button>
+        )}
       </>
     );
   }

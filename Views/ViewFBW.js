@@ -1,5 +1,63 @@
 import React, { Component } from "react";
 import Clock from "../Views/Clock";
+import styled from "styled-components";
+
+const Container = styled.section`
+  width: 90%;
+  height: 90%;
+  text-align: center;
+  font-family: "Play";
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+  margin: 25% 5% 0 5%;
+`;
+const Button = styled.button`
+  position: relative;
+  width: 50%;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  background: #00b16a;
+  color: #eee;
+  text-align: left;
+  padding-left: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+  flex-basis: 100%;
+  :before {
+    position: absolute;
+    font-size: 22px;
+    right: 10px;
+    transform: translate(0, -15%);
+  }
+`;
+const Button2 = styled(Button)`
+  width: 20%;
+`;
+const H1 = styled.h1``;
+
+const UL = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #67809f;
+  border-radius: 10px;
+  width: 70%;
+
+  > li:first-child {
+    /* display:none */
+    /* flex-basis: 100%; */
+    align-items: flex-start;
+    width: 100%;
+    margin-left: 15px;
+    font-size: 15px;
+  }
+`;
+const FirstLi = styled.li``;
 
 class ViewFBW extends Component {
   state = {
@@ -151,28 +209,31 @@ class ViewFBW extends Component {
         {hideView ? (
           <Clock value={timer} next={this.handlerNext} />
         ) : (
-          <div>
-            <h1>Seria {active_series}</h1>
-            <ul>
+          <Container>
+            <H1>Seria {active_series}</H1>
+
+            <UL>
               <li>{names[active_workout - 1]}</li>
-              <li>Ilość powturzeń :{options[counter_options]}</li>
+              <li>Powturzenia :{options[counter_options]}</li>
               <li>Dodadkowy ciężar: {options[counter_options + 1]} </li>
-              <li>{descriptions[active_workout - 1]}</li>
-            </ul>
+              <li>
+                Opis ćwiczenia: <br />
+                {descriptions[active_workout - 1]}
+              </li>
+            </UL>
             {flag_end ? (
-              <input
-                type="button"
-                value="Dalej"
+              <Button2
+                className="fas fa-hourglass-end"
                 onClick={this.props.endWorkOut}
-              />
+              >
+                Dalej
+              </Button2>
             ) : (
-              <input
-                type="button"
-                value="Odliczaj Przerwe"
-                onClick={this.handlerClick}
-              />
+              <Button className="fas fa-clock" onClick={this.handlerClick}>
+                Odliczaj przerwe
+              </Button>
             )}
-          </div>
+          </Container>
         )}
       </>
     );

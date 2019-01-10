@@ -7,7 +7,8 @@ const GlobalStyle = createGlobalStyle`
  body{
    
    background:#34495e;
-   color : white
+   color : white;
+   text-align: center;
  }
  *,*::after, *::before{
    box-sizing:border-box;
