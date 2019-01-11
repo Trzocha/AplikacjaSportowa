@@ -29,7 +29,17 @@ const GlobalStyle = createGlobalStyle`
  ul{
    margin-top:10px;
  }
-
+ canvas{
+   position:absolute;
+   top:50%;
+   left:50%;
+   transform:translate(-50%,-50%);
+   width:80%;
+   height:50%;
+ }
+ td{
+   padding-right:10px;
+ }
 `;
 
 var data = {
@@ -38,36 +48,136 @@ var data = {
     ilosc_list: 4,
     lista_1: {
       opcje_listy: {
-        ilosc_przerwy_cw: 1,
-        ilosc_przerwy_ser: 20,
-        ilosc_ser: 2,
-        ilosc_cwiczen: 2
+        ilosc_przerwy_cw: 60,
+        ilosc_przerwy_ser: 150,
+        ilosc_ser: 4,
+        ilosc_cwiczen: 5
       },
       seria_1: {
         cw_1: {
-          name: "Pompki",
-          opis: "polozyc sie na podlodze",
-          ilosc_dod_obc: 5,
-          ilosc_powt_w_cw: 10
+          name: "Podciąganie nadchwyt",
+          opis: "Wykonać na drążku, uchwyt nieco szerzej od szerokości barków",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 6
         },
         cw_2: {
-          name: "Brzuszki",
-          opis: "na podlodze zginac sie",
+          name: "Pompki",
+          opis: "Wykonać na maszynie",
+          ilosc_dod_obc: 45,
+          ilosc_powt_w_cw: 12
+        },
+        cw_3: {
+          name: "Podciąganie podchwyt",
+          opis: "Wykonać na drążku, uchwyt na szerokości barków",
           ilosc_dod_obc: 0,
-          ilosc_powt_w_cw: 15
+          ilosc_powt_w_cw: 6
+        },
+        cw_4: {
+          name: "Dipy ",
+          opis: "Wykonać na poręczach",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 10
+        },
+        cw_5: {
+          name: "Brzuszki",
+          opis: "Wykonać na maszynie",
+          ilosc_dod_obc: 25,
+          ilosc_powt_w_cw: 20
         }
       },
       seria_2: {
         cw_1: {
-          name: "Pom",
-          opis: "na podlodze",
-          ilosc_dod_obc: 10,
-          ilosc_powt_w_cw: 15
+          name: "Podciąganie nadchwyt",
+          opis: "Wykonać na drążku, uchwyt nieco szerzej od szerokości barków",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 6
         },
         cw_2: {
-          name: "Brzu",
-          opis: "zginac sie",
-          ilosc_dod_obc: 5,
+          name: "Pompki",
+          opis: "Wykonać na maszynie",
+          ilosc_dod_obc: 50,
+          ilosc_powt_w_cw: 12
+        },
+        cw_3: {
+          name: "Podciąganie podchwyt",
+          opis: "Wykonać na drążku, uchwyt na szerokości barków",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 6
+        },
+        cw_4: {
+          name: "Dipy ",
+          opis: "Wykonać na poręczach",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 10
+        },
+        cw_5: {
+          name: "Brzuszki",
+          opis: "Wykonać na maszynie",
+          ilosc_dod_obc: 30,
+          ilosc_powt_w_cw: 20
+        }
+      },
+      seria_3: {
+        cw_1: {
+          name: "Podciąganie nadchwyt",
+          opis: "Wykonać na drążku, uchwyt nieco szerzej od szerokości barków",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 6
+        },
+        cw_2: {
+          name: "Pompki",
+          opis: "Wykonać na maszynie",
+          ilosc_dod_obc: 55,
+          ilosc_powt_w_cw: 10
+        },
+        cw_3: {
+          name: "Podciąganie podchwyt",
+          opis: "Wykonać na drążku, uchwyt na szerokości barków",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 6
+        },
+        cw_4: {
+          name: "Dipy ",
+          opis: "Wykonać na poręczach",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 10
+        },
+        cw_5: {
+          name: "Brzuszki",
+          opis: "Wykonać na maszynie",
+          ilosc_dod_obc: 30,
+          ilosc_powt_w_cw: 20
+        }
+      },
+      seria_4: {
+        cw_1: {
+          name: "Podciąganie nadchwyt",
+          opis: "Wykonać na drążku, uchwyt nieco szerzej od szerokości barków",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 6
+        },
+        cw_2: {
+          name: "Pompki",
+          opis: "Wykonać na maszynie",
+          ilosc_dod_obc: 55,
+          ilosc_powt_w_cw: 10
+        },
+        cw_3: {
+          name: "Podciąganie podchwyt",
+          opis: "Wykonać na drążku, uchwyt na szerokości barków",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 6
+        },
+        cw_4: {
+          name: "Dipy ",
+          opis: "Wykonać na poręczach",
+          ilosc_dod_obc: 0,
+          ilosc_powt_w_cw: 10
+        },
+        cw_5: {
+          name: "Brzuszki",
+          opis: "Wykonać na maszynie",
+          ilosc_dod_obc: 30,
           ilosc_powt_w_cw: 20
         }
       }

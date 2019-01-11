@@ -1,6 +1,5 @@
 import React from "react";
 import P5Wrapper from "react-p5-wrapper";
-// import sketch from "../src/sketch";
 
 //clock max break 179sek
 function sketch(p) {
@@ -19,7 +18,7 @@ function sketch(p) {
       if (minute === -1) {
         flagCounter = false;
         counter = 0;
-        console.log("KONIEC");
+        // console.log("KONIEC");
         next();
       }
     }
@@ -35,14 +34,14 @@ function sketch(p) {
       minute = Math.floor(second / 60);
       second = second % 60;
     }
-    console.log("m:" + minute + " s:" + second);
+    // console.log("m:" + minute + " s:" + second);
   };
   p.setup = function() {
     p.createCanvas(400, 400);
   };
 
   p.draw = function() {
-    p.background(0);
+    p.background(52, 73, 94);
     p.noStroke();
     p.translate(200, 200);
     p.rotate(-3.14 / 2);

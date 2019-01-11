@@ -8,7 +8,6 @@ const Container = styled.section`
   text-align: center;
   font-family: "Play";
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   margin: 25% 5% 0 5%;
@@ -27,37 +26,40 @@ const Button = styled.button`
   margin-top: 15px;
   margin-bottom: 15px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
-  flex-basis: 100%;
   :before {
     position: absolute;
     font-size: 22px;
-    right: 10px;
+    right: 5px;
     transform: translate(0, -15%);
   }
 `;
 const Button2 = styled(Button)`
-  width: 20%;
+  width: 30%;
 `;
-const H1 = styled.h1``;
-
-const UL = styled.ul`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const H1 = styled.h1`
+  width: 100%;
+  text-align: left;
+  text-decoration: underline;
+`;
+const Table = styled.table`
   background: #67809f;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
-  width: 70%;
-
-  > li:first-child {
-    /* display:none */
-    /* flex-basis: 100%; */
-    align-items: flex-start;
-    width: 100%;
-    margin-left: 15px;
-    font-size: 15px;
+  margin: 20px 0px;
+  width: 90%;
+  tbody {
+    > tr:last-child td {
+      padding-bottom: 20px;
+    }
   }
 `;
-const FirstLi = styled.li``;
+const Tr = styled.tr`
+  height: 40px;
+`;
+const Td = styled.td`
+  text-align: left;
+  padding-left: 10px;
+`;
 
 class ViewFBW extends Component {
   state = {
@@ -211,16 +213,26 @@ class ViewFBW extends Component {
         ) : (
           <Container>
             <H1>Seria {active_series}</H1>
-
-            <UL>
-              <li>{names[active_workout - 1]}</li>
-              <li>Powturzenia :{options[counter_options]}</li>
-              <li>Dodadkowy ciężar: {options[counter_options + 1]} </li>
-              <li>
-                Opis ćwiczenia: <br />
-                {descriptions[active_workout - 1]}
-              </li>
-            </UL>
+            <br />
+            <h2>{names[active_workout - 1]}</h2>
+            <Table>
+              <tbody>
+                <Tr>
+                  <Td>Powturzenia :</Td>
+                  <td>{options[counter_options + 1]}</td>
+                </Tr>
+                <Tr>
+                  <Td> Dodadkowy ciężar [kg] :</Td>
+                  <td>{options[counter_options]}</td>
+                </Tr>
+                <Tr>
+                  <th>Opis ćwiczenia :</th>
+                </Tr>
+                <Tr>
+                  <Td>{descriptions[active_workout - 1]}</Td>
+                </Tr>
+              </tbody>
+            </Table>
             {flag_end ? (
               <Button2
                 className="fas fa-hourglass-end"
