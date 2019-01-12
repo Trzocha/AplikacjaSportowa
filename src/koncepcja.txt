@@ -1,0 +1,30 @@
+Lista : własna masa ciała
+
+Koncepcja głowna:
+- jedna seria sklada sie z np 5 cwiczen, wkazdej serii cwiczenia sa wyykonywane w tej samej kolejnosci, z taka sama nazwa, 
+    zmienic moze sie jedynie parametr w cwiczeniu
+
+Koncepcja:
+- Dodanie serii - jezeli dodaje serie to dodaje z taka sama iloscia cwiczen jak w 1 serii, dodadkowo chowaja lub pokazuja 
+    sie odpowiednie przyciski sterujace
+- Dodanie listy - jezeli dodaje liste , widok wskakuje na nowo stworzona liste
+- Dodanie cwiczenia - jezeli dodaje cwiczenie , dodaje je takze w kazdej stworzonej serii
+
+-Usuwanie serii - usuwam ostatnia bo i tak wszystkie serie maja takie same cwiczenia, jedynie co sie zmienia to opcje w 
+    w danym cwiczeniu
+- Usuwanie listy - usuwam aktualna liste jaka jest w widoku, zmiejszam liczbe wyboru list i odpowiendiu w struktorze danych 
+    przesuwam listy
+
+- Kazde cwiczenie ma osobne parametry do ustawienia, ktore beda sie wyswietlac w czasie dzialania aplikacji
+- Kazda lista ma swoje parametry do ustawienia
+- Czyszenie listy - czyszcze wszystkie parametry glowne listy, wszystkie -1 serie, wszystkie cwiczenia
+
+
+//czysczenie opcji w danym cwiczeniu (ale czy to ma sens?)
+//mozliwosc dodania zdjecia by mozna bylo poglodowo zobaczc jakie rozwijamy np partie miesniowe
+//mozliwosc zamiany miejscami cwiczenia
+
+//blad mozliwosc usuniecia wszystkich cwiczen
+//blad przy usuwaniu pierwszej listy, 
+//w listFBW , funkcja delete ustawiam flage a nie ma wgl podanego stanu, cos zle przekopiowane? 
+
