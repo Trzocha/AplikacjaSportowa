@@ -2,7 +2,7 @@
 
 Aplikacja została napisana z pomocą bibloteki React.js, wykorzystujące także styledComponents.js i P5Wrapper.js.
 
-Preferowana rozdzielczośc 360x560 . Idealnie na telefon.
+Preferowana rozdzielczośc 560x360 px . Idealnie na telefon.
 
 Apke strzorzyłem na własnych celów, rozwijając myśl :  pozwala zapanować nad planami treningowymi z własna masą ciała + siłownia.
 Narazie aplikacja wykorzystuje dane "demo" i działa w pełni na tych danych.
