@@ -2,10 +2,13 @@
 
 Aplikacja została napisana z pomocą bibloteki React.js, wykorzystujące także styledComponents.js i P5Wrapper.js.
 
+Preferowana rozdzielczośc 360x560 . Idealnie na telefon.
+
 Apke strzorzyłem na własnych celów, rozwijając myśl :  pozwala zapanować nad planami treningowymi z własna masą ciała + siłownia.
 Narazie aplikacja wykorzystuje dane "demo" i działa w pełni na tych danych.
 
 Jak działa?
+
 Podczas załadowania strony, jest wybór ustawień dla ćwiczeń z własna masa ciała oraz dla ćwiczen na siłowni. Aplikacja pozwala
 na stworzenie własnej listy planu treningowymu. Można ustawić czasy przerw dla róznych etapów w czasie treningu. Dodać/usunąć
 liczbe serri, dodać/usunąć ćwiczenia, ustawić opcje dla konkentego ćwiczenia poprzez ustawienie ilosci powtorzeń, z jakim ciężarem
