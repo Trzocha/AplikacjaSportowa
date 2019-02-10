@@ -27,4 +27,4 @@ Plany rozwoju?
 3. Dołożyc logowanie aby móc pobierać konkretne dane z bazy danych
 
 Link demo:
-www.stwebrider.ovh/strony/AplikacjaTreningowa
+https://trzocha.github.io/AplikacjaSportowa/
